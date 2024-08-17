@@ -1,0 +1,102 @@
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { db } from "../../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+
+const ProjectCreate = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [language, setLanguage] = useState("");
+  const [teamSize, setTeamSize] = useState("");
+  const [duration, setDuration] = useState("");
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "projects"), {
+        title,
+        description,
+        language,
+        teamSize,
+        duration,
+        createdAt: new Date(),
+      });
+      alert("プロジェクトが作成されました！");
+      setTitle("");
+      setDescription("");
+      setLanguage("");
+      setTeamSize("");
+      setDuration(""); //form内を空にリセット
+
+      router.push("/i-team/home");
+
+    } catch (e) {
+      console.error("プロジェクトの作成に失敗しました", e);
+      alert("プロジェクトの作成に失敗しました");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-gray-800 p-4">
+      <div className="flex justify-center my-12">
+        <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className="border rounded-lg h-10 w-1/2"
+        />
+      </div>
+      <div className="flex justify-center mb-12">
+        <label className="text-cyan-50 text-3xl mr-3">開発内容</label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+          rows={10}
+          className="border rounded-lg w-1/2"
+        />
+      </div>
+      <div className="flex justify-center mb-12">
+        <label className="text-cyan-50 text-3xl mr-3">開発言語</label>
+        <input
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          required
+          className="border rounded-lg w-1/2"
+        />
+      </div>
+      <div className="flex justify-center mb-12">
+        <label className="text-cyan-50 text-3xl mr-3">開発人数</label>
+        <input
+          value={teamSize}
+          onChange={(e) => setTeamSize(e.target.value)}
+          required
+          className="border rounded-lg w-1/2"
+        />
+      </div>
+      <div className="flex justify-center mb-12">
+        <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
+        <input
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          required
+          className="border rounded-lg w-1/2"
+        />
+      </div>
+      <div className="text-center">
+        <button type="submit" className="bg-blue-500 text-white h-14 w-24 rounded-lg px-4 py-2">
+            作成
+        </button>
+      </div>
+      
+    </form>
+  );
+};
+
+export default ProjectCreate;

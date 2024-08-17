@@ -67,30 +67,6 @@ const HomePage = () => {
           </ul>
         </div>
       </div>
-      
-      <div className="bg-gray-800 text-cyan-50">
-        <div className="flex justify-center">
-          <h1 className="text-4xl">さっそく始めよう！</h1>
-        </div>
-        <div className="flex mt-16 pb-16 justify-center gap-60">
-          <div>
-            <Link
-              href="/auth/register"
-              className="text-3xl bg-gray-600 px-5 py-3 rounded-2xl hover:bg-gray-500"
-            >
-              新規登録
-            </Link>
-          </div>
-          <div>
-            <Link
-              href="/auth/login"
-              className="text-3xl bg-gray-600 px-5 py-3 rounded-2xl hover:bg-gray-500"
-            >
-              ログイン
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
