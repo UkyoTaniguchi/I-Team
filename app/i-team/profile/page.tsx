@@ -33,7 +33,7 @@ const Profile = () => {
           console.log("No such document!");
         }
       } else {
-        router.push("/auth/login");
+        router.push("/auth/login"); //リダイレクト
       }
     };
 
