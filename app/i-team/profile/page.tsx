@@ -30,7 +30,7 @@ const Profile = () => {
           setExperienceLanguage(userData.experienceLanguage);
           setProfileImage(userData.profileImage); //状態更新
         } else {
-          console.log("No such document!");
+          console.log("No such document!"); //
         }
       } else {
         router.push("/auth/login"); //リダイレクト
