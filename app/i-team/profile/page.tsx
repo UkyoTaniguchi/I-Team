@@ -30,7 +30,7 @@ const Profile = () => {
           setExperienceLanguage(userData.experienceLanguage);
           setProfileImage(userData.profileImage); //状態更新
         } else {
-          console.log("No such document!"); //
+          console.log("No such document!");
         }
       } else {
         router.push("/auth/login"); //リダイレクト
@@ -41,8 +41,8 @@ const Profile = () => {
   }, [router]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { //画像アップロードハンドラー
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) { //ファイルを選択している場合
+      const file = e.target.files[0]; //ユーザが選択したファイルを変数に格納
       setNewProfileImage(file); // 新しい画像を一時的に保存
       setProfileImage(URL.createObjectURL(file)); // プレビューを更新
     }
@@ -51,12 +51,12 @@ const Profile = () => {
   const handleSaveChanges = async () => { //変更保存ハンドラー
     const user = auth.currentUser; //現在ログインしているユーザ情報取得
     if (user) {
-      let downloadURL = profileImage;
+      let downloadURL = profileImage; //プロフィール画像のURL格納
 
       if (newProfileImage) { //新しい画像がある場合
-        const storageRef = ref(storage, `profileImages/${user.uid}`);
-        await uploadBytes(storageRef, newProfileImage);
-        downloadURL = await getDownloadURL(storageRef); //firebase storageにアップ，そのURL取得
+        const storageRef = ref(storage, `profileImages/${user.uid}`); //ユーザのUIDを使ったファイルパス生成
+        await uploadBytes(storageRef, newProfileImage); //パスを使って新しい画像ファイルをfirebase storageにアップロード
+        downloadURL = await getDownloadURL(storageRef); //firebase storageにアップロードした公開URL取得
       }
 
       await setDoc(doc(db, "users", user.uid), { //firestoreにデータの変更をマージ
@@ -76,13 +76,15 @@ const Profile = () => {
       <div className="bg-cyan-50 p-8 m-5 rounded-lg w-11/12">
         <div className="flex justify-center">
           {profileImage ? (
-            <Image
-              src={profileImage}
-              alt="Profile Image"
-              width={150}
-              height={150}
-              className="rounded-full border border-black"
-            />
+            <div className="relative bg-white w-36 h-36 rounded-full border border-black overflow-hidden">
+              <Image
+                src={profileImage}
+                alt="Profile Image"
+                layout="fill"
+                objectFit="cover"
+                className="object-cover"
+              />
+            </div>
           ) : (
             <div className="w-36 h-36 rounded-full bg-gray-200 flex items-center justify-center">
               No Image
@@ -95,7 +97,7 @@ const Profile = () => {
           </div>
         )}
         <div>
-          <h1 className="mb-4 text-2xl font-bold">プロフィール</h1>
+          <h1 className="mt-10 mb-4 text-3xl font-bold">プロフィール</h1>
           <div className="mb-4">
             <label className="block text-sm font-medium">アカウント名</label>
             {isEditing ? (
@@ -151,7 +153,7 @@ const Profile = () => {
                 onClick={() => setIsEditing(true)}
                 className="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
               >
-                設定
+                プロフィールの編集
               </button>
             )}
           </div>

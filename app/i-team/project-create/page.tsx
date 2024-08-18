@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { db } from "../../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../firebaseConfig";
+import { collection, addDoc, doc,  getDoc } from "firebase/firestore";
 
 const ProjectCreate = () => {
   const [title, setTitle] = useState("");
@@ -18,23 +18,33 @@ const ProjectCreate = () => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, "projects"), {
-        title,
-        description,
-        language,
-        teamSize,
-        duration,
-        createdAt: new Date(),
-      });
-      alert("プロジェクトが作成されました！");
-      setTitle("");
-      setDescription("");
-      setLanguage("");
-      setTeamSize("");
-      setDuration(""); //form内を空にリセット
+      const user = auth.currentUser; // 現在のユーザーを取得
 
-      router.push("/i-team/home");
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid)); //現在のユーザの""users"ドキュメントを参照，取得
+        const userData = userDoc.exists() ? userDoc.data() : null;
+        const userProfileImage = userData ? userData.profileImage : null;
 
+        await addDoc(collection(db, "projects"), {
+          title,
+          description,
+          language,
+          teamSize,
+          duration,
+          createdAt: new Date(),
+          createdBy: user.uid, // 作成者のUIDを保存
+          creatorProfileImage: userProfileImage, // 作成者のアイコンURLを保存
+        });
+
+        alert("プロジェクトが作成されました！");
+        setTitle("");
+        setDescription("");
+        setLanguage("");
+        setTeamSize("");
+        setDuration(""); // フォーム内を空にリセット
+
+        router.push("/i-team/home");
+      }
     } catch (e) {
       console.error("プロジェクトの作成に失敗しました", e);
       alert("プロジェクトの作成に失敗しました");
