@@ -1,98 +1,83 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-const HomePage = () => {
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../../firebaseConfig";
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { useRouter, useSearchParams } from "next/navigation";
+
+const ChatPage = () => {
+  const [messages, setMessages] = useState<any[]>([]); // メッセージの配列
+  const [newMessage, setNewMessage] = useState(""); // 新しいメッセージ
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("projectId"); // URLからプロジェクトIDを取得
+
+  useEffect(() => {
+    if (!projectId) {
+      router.push("/i-team/home"); // プロジェクトIDがなければホームにリダイレクト
+      return;
+    }
+
+    const q = query(
+      collection(db, "projects", projectId, "chats"),
+      orderBy("createdAt", "asc")
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const messagesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(messagesData);
+    });
+
+    return () => unsubscribe();
+  }, [projectId, router]);
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!newMessage.trim()) return;
+
+    const user = auth.currentUser;
+
+    if (user && projectId) {
+      await addDoc(collection(db, "projects", projectId, "chats"), {
+        text: newMessage,
+        createdAt: serverTimestamp(),
+        userId: user.uid,
+        userName: user.displayName || "Anonymous", // ユーザー名を保存
+      });
+
+      setNewMessage(""); // 入力フィールドをリセット
+    }
+  };
+
   return (
-    <div>
-      <div className="flex bg-gray-800 h-screen justify-center items-center text-cyan-50">
-        <div className="bg-sky-900 h-5/6 w-11/12 p-10 rounded-3xl">
-          <div>
-            <h1 className="text-7xl mb-5">気軽なチーム開発を</h1>
-            <p className="text-2xl mb-12">I-TEAMではIT職を希望する学生や社会人のためのチーム開発プラットフォームを提供しています</p>
-            <p className="text-2xl mb-5">こんな経験はありませんか？</p>
+    <div className="min-h-screen bg-gray-800 p-4">
+      <h1 className="text-4xl font-bold text-cyan-50 mb-8">チャット</h1>
+      <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto h-96 mb-4">
+        {messages.map((message) => (
+          <div key={message.id} className={`p-2 ${auth.currentUser?.uid === message.userId ? 'text-right' : 'text-left'}`}>
+            <p className="text-cyan-50"><strong>{message.userName}</strong></p>
+            <p className="text-white">{message.text}</p>
           </div>
-          <div className="flex justify-evenly">
-            <div className="w-80 rounded-2xl">
-              <Image
-                src="/reson1.png"
-                alt="Experience1"
-                width={300}
-                height={300}
-                className="h-72 w-80 object-cover rounded-2xl bg-white"
-              />
-              <p className="mt-5 text-2xl">ITに興味があり勉強をしているが開発の経験が少ない</p>
-            </div>
-            <div className="w-80 rounded-2xl">
-              <Image
-                src="/reson2.jpg"
-                alt="Experience1"
-                width={300}
-                height={300}
-                className="h-72 w-80 object-cover rounded-2xl bg-white"
-              />
-              <p className="mt-5 text-2xl">チームでの開発を経験したことがない</p>
-            </div>
-            <div className="w-80 rounded-2xl">
-              <Image
-                src="/reson3.png"
-                alt="Experience3"
-                width={300}
-                height={300}
-                className="h-72 w-80 object-cover rounded-2xl bg-white"
-              />
-              <p className="mt-5 text-2xl">就職までにガクチカで話せる幅を増やしたい</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
-
-      <div className="bg-gray-800 h-screen text-cyan-50">
-        <div className="flex justify-center">
-          <h1 className="text-4xl">このような悩みを解決できるプラットフォームが「I-TEAM」</h1>
-        </div>
-        <div className="flex justify-center mt-10">
-          <Image
-            src="/logo.png"
-            alt="I-Team logo"
-            width={500}
-            height={500}
-          />
-        </div>
-        <div className="bg-sky-800 px-2 py-5 mt-10">
-          <ul className="text-3xl text-center">
-            <li className="mb-5">I-TEAMではオンラインでチーム開発をする仲間を募集、参加することができる</li>
-            <li className="mb-5">初対面の人とチーム開発を行うことでコミュニケーション能力向上やチーム開発を経験できる</li>
-            <li className="">開発の内容はルーム作成者が決めるかみんなで話し合ってブラッシュアップしよう！</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div className="bg-gray-800 text-cyan-50">
-        <div className="flex justify-center">
-          <h1 className="text-4xl">さっそく始めよう！</h1>
-        </div>
-        <div className="flex mt-16 pb-16 justify-center gap-60">
-          <div>
-            <Link
-              href="/auth/register"
-              className="text-3xl bg-gray-600 px-5 py-3 rounded-2xl hover:bg-gray-500"
-            >
-              新規登録
-            </Link>
-          </div>
-          <div>
-            <Link
-              href="/auth/login"
-              className="text-3xl bg-gray-600 px-5 py-3 rounded-2xl hover:bg-gray-500"
-            >
-              ログイン
-            </Link>
-          </div>
-        </div>
-      </div>
+      <form onSubmit={handleSendMessage} className="flex">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          className="flex-grow p-2 rounded-l-lg border-none"
+          placeholder="メッセージを入力..."
+        />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">
+          送信
+        </button>
+      </form>
     </div>
   );
 };
 
-export default HomePage;
+export default ChatPage;

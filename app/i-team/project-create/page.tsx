@@ -43,7 +43,7 @@ const ProjectCreate = () => {
         setTeamSize("");
         setDuration(""); // フォーム内を空にリセット
 
-        router.push("/i-team/home");
+        router.push("/chat/main?projectId=${docRef.id}");
       }
     } catch (e) {
       console.error("プロジェクトの作成に失敗しました", e);

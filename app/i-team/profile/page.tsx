@@ -20,8 +20,7 @@ const Profile = () => {
     const fetchUserData = async () => { //ユーザデータを非同期で取得する関数
       const user = auth.currentUser; //現在ログインしているユーザ情報取得
       if (user) {
-        const docRef = doc(db, "users", user.uid); //現在のユーザの""users"ドキュメントを参照する変数
-        const docSnap = await getDoc(docRef); //docRefを使ってドキュメントを取得
+        const docSnap = await getDoc(doc(db, "users", user.uid)); //現在のユーザの""users"ドキュメントを参照,取得
 
         if (docSnap.exists()) {
           const userData = docSnap.data(); //オブジェクト形式でデータを取得
