@@ -85,7 +85,7 @@ const Register = () => {
               <input
                 {...register("gender", { required: "性別は必須です．" })}
                 type="radio"
-                value="male"
+                value="男"
               />
               男
             </label>
@@ -93,7 +93,7 @@ const Register = () => {
               <input
                 {...register("gender", { required: "性別は必須です．" })}
                 type="radio"
-                value="female"
+                value="女"
               />
               女
             </label>
@@ -101,7 +101,7 @@ const Register = () => {
               <input
                 {...register("gender", { required: "性別は必須です．" })}
                 type="radio"
-                value="non-binary"
+                value="どちらでもない"
               />
               どちらでもない
             </label>
