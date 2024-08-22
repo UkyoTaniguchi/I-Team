@@ -118,9 +118,9 @@ const Profile = () => {
                 onChange={(e) => setGender(e.target.value)}
                 className="mt-1 border-2 rounded-md w-full p-2"
               >
-                <option value="male">男</option>
-                <option value="female">女</option>
-                <option value="non-binary">どちらでもない</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+                <option value="どちらでもない">どちらでもない</option>
               </select>
             ) : (
               <p className="mt-1 border-2 rounded-md w-full p-2">{gender}</p>

@@ -9,7 +9,7 @@ const ProjectCreate = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [language, setLanguage] = useState("");
-  const [teamSize, setTeamSize] = useState("");
+  const [teamSize, setTeamSize] = useState("2");
   const [duration, setDuration] = useState("");
 
   const router = useRouter();
@@ -25,7 +25,7 @@ const ProjectCreate = () => {
         const userData = userDoc.exists() ? userDoc.data() : null;
         const userProfileImage = userData ? userData.profileImage : null;
 
-        await addDoc(collection(db, "projects"), {
+        const docRef = await addDoc(collection(db, "projects"), {
           title,
           description,
           language,
@@ -33,6 +33,7 @@ const ProjectCreate = () => {
           duration,
           createdAt: new Date(),
           createdBy: user.uid, // 作成者のUIDを保存
+          joinauth: [user.uid], //プロジェクト参加者を保存
           creatorProfileImage: userProfileImage, // 作成者のアイコンURLを保存
         });
 
@@ -40,10 +41,10 @@ const ProjectCreate = () => {
         setTitle("");
         setDescription("");
         setLanguage("");
-        setTeamSize("");
+        setTeamSize("2");
         setDuration(""); // フォーム内を空にリセット
 
-        router.push("/chat/main?projectId=${docRef.id}");
+        router.push(`/chat/main?projectId=${docRef.id}`);
       }
     } catch (e) {
       console.error("プロジェクトの作成に失敗しました", e);
@@ -83,12 +84,18 @@ const ProjectCreate = () => {
       </div>
       <div className="flex justify-center mb-12">
         <label className="text-cyan-50 text-3xl mr-3">開発人数</label>
-        <input
+        <select
           value={teamSize}
           onChange={(e) => setTeamSize(e.target.value)}
           required
-          className="border rounded-lg w-1/2"
-        />
+          className="border rounded-lg w-1/2 h-10"
+        >
+          <option value="2">2人</option>
+          <option value="3">3人</option>
+          <option value="4">4人</option>
+          <option value="5">5人</option>
+          <option value="6">6人</option>
+        </select>
       </div>
       <div className="flex justify-center mb-12">
         <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
@@ -100,7 +107,7 @@ const ProjectCreate = () => {
         />
       </div>
       <div className="text-center">
-        <button type="submit" className="bg-blue-500 text-white h-14 w-24 rounded-lg px-4 py-2">
+        <button type="submit" className="bg-blue-500 text-white h-12 w-24 rounded-lg px-4 py-2 hover:bg-blue-600">
             作成
         </button>
       </div>

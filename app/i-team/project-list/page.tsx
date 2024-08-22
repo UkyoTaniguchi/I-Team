@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebaseConfig";
+import { auth, db } from "../../firebaseConfig";
 import { collection, getDocs, doc, query, orderBy } from "firebase/firestore";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Home = () => {
+const Myproject = () => {
   const [projects, setProjects] = useState<any[]>([]); //プロジェクト配列定義
   const router = useRouter();
 
@@ -28,10 +28,10 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-800">
       <div className="text-cyan-50 p-4">
-        <h1 className="text-4xl font-bold mb-8 ml-32">プロジェクト一覧</h1>
+        <h1 className="text-4xl font-bold mb-8 ml-32">参加中プロジェクト</h1>
         {projects.map((project) => (
           <div className="flex justify-center">
-            {project.joinauth.length < project.teamSize && (
+            {project.joinauth && project.joinauth.includes(auth.currentUser?.uid) && (
               <div key={project.id} className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                 <div className="flex w-full">
                   <div className="w-1/5 py-3 flex flex-col justify-center items-center">
@@ -62,7 +62,7 @@ const Home = () => {
                     <p>開発期間: {project.duration}</p>
                     <div className="flex justify-center">
                       <Link href={`/chat/main?projectId=${project.id}`} className="bg-blue-600 rounded p-2 hover:bg-blue-700">
-                        参加する
+                        チャットに移動する
                       </Link>
                     </div>
                   </div>
@@ -78,4 +78,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Myproject
