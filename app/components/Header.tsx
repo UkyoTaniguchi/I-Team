@@ -1,31 +1,15 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "../firebaseConfig";
 import { useRouter } from "next/navigation";
 
-// type HeaderProps = {
-//   isLoggedIn: boolean;
-// };
+type HeaderProps = {
+  isLoggedIn: boolean;
+};
 
-const Header = () => {
+const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // ユーザーの認証状態を監視
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   const handleLogout = async () => {
     try {
