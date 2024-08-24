@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-import { auth } from "./firebaseConfig";  // Firebaseの設定ファイルをインポート
+import { auth } from "./firebaseConfig"; // Firebaseの設定ファイルをインポート
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +29,6 @@ export default function RootLayout({
     return () => unsubscribe();
   }, []);
 
-  console.log(isLoggedIn)
   return (
     <html lang="ja">
       <body className={inter.className}>
