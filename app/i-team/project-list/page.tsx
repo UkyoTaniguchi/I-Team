@@ -31,13 +31,12 @@ const Myproject = () => {
       <div className="text-cyan-50 p-4">
         <h1 className="text-4xl font-bold mb-8 ml-32">参加中プロジェクト</h1>
         {projects.map((project) => (
-          <div className="flex justify-center">
+          <div key={project.id} className="flex justify-center">
+            {" "}
+            {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
               project.joinauth.includes(auth.currentUser?.uid) && (
-                <div
-                  key={project.id}
-                  className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4"
-                >
+                <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
                       <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
