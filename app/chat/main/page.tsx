@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { auth, db } from "../../firebaseConfig";
 import { collection, doc, addDoc, updateDoc, query, orderBy, onSnapshot, serverTimestamp, getDoc } from "firebase/firestore";
@@ -116,6 +117,10 @@ const ChatPage = () => {
     }
   };
 
+  const handleStartProject = () => {
+
+  };
+
   return (
     <div className="h-screen bg-gray-800 p-4">
       {/* <h1 className="text-4xl font-bold text-cyan-50 mb-8">チャット</h1> */}
@@ -126,14 +131,14 @@ const ChatPage = () => {
               <p className="text-white">{message.text}</p>
             </div>
           ) : (
-            <div className="flex items-center" key={message.id}>
+            <div key={message.id} className="flex items-center">
               {userProfileImages[message.userId] ? (
                 <div className="relative w-10 h-10 rounded-full bg-white">
                   <Image
                     src = {userProfileImages[message.userId]}
                     alt="profile Image"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                style={{objectFit: 'cover'}}
                     className="object-cover"
                   />
                 </div>
@@ -141,7 +146,7 @@ const ChatPage = () => {
                 <div className="flex w-12 h-12 rounded-full text-xs bg-white items-center">
                   <p className="text-center">No Image</p>
                 </div>
-              )};
+              )}
               
               <div key={message.id} className="p-2 text-left">
                 <p className="text-cyan-50"><strong>{message.userName}</strong></p>
@@ -152,18 +157,67 @@ const ChatPage = () => {
           )    
         ))}
       </div>
-      <form onSubmit={handleSendMessage} className="flex">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className="flex-grow p-2 rounded-l-lg border-none"
-          placeholder="メッセージを入力..."
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">
-          送信
-        </button>
-      </form>
+      <div>
+        <form onSubmit={handleSendMessage} className="flex">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className="flex-grow p-2 rounded-l-lg border-none"
+            placeholder="メッセージを入力..."
+          />
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">
+            送信
+          </button>
+        </form>
+      </div>
+      <div className="flex mt-4 justify-evenly">
+        <div className="w-80 h-44">
+          <button onClick={handleStartProject} className="w-full h-full">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden">
+              <Image
+                src="/start.jpg"
+                alt="start_button"
+                fill
+                style={{objectFit: 'cover', filter: 'blur(2px)'}}
+              />
+              <div className="absolute inset-0 flex justify-center items-center">
+                <p className="text-blue-400 text-3xl font-extrabold">このメンバーで始める</p>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div className="w-80 h-44">
+          <Link href="/chat/submit">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden bg-white">
+              <Image
+                src="/slack2.webp"
+                alt="start_button"
+                fill
+                style={{objectFit: 'contain', filter: 'blur(2px)'}}
+              />
+              <div className="absolute inset-0 flex justify-center items-center">
+                <p className="text-blue-600 text-3xl font-extrabold">Slackへ移動</p>
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="w-80 h-44">
+          <Link href="/chat/submit">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden">
+              <Image
+                src="/submit.jpeg"
+                alt="start_button"
+                fill
+                style={{objectFit: 'cover', filter: 'blur(3px)'}}
+              />
+              <div className="absolute inset-0 flex justify-center items-center">
+                <p className="text-blue-600 text-3xl font-extrabold">作品を投稿する</p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
