@@ -81,6 +81,7 @@ const Submit = () => {
       console.error("プロジェクトIDが見つかりません");
       return;
     }
+    setFinish(true);
 
     try{
       const projectRef = doc(db, "projects", projectId);
@@ -92,12 +93,12 @@ const Submit = () => {
         ideapoint,
         background,
         explain,
+        end: true,
         createdAt: new Date(),
         images: selectedImages
       }, {merge: true});
 
       console.log("プロジェクトが正常に更新されました");
-      setFinish(true);
       router.push("/i-team/home");
       
     } catch(error){
@@ -258,7 +259,7 @@ const Submit = () => {
             </div>
           </div>
           <div className="flex justify-center h-5/6">
-            <div className="flex relative w-10/12 h-5/6 border justify-center items-center">
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
               {selectedImages[1] ? (
                 <img
                   src={selectedImages[1]}
