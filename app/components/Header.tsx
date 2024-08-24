@@ -1,8 +1,11 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "../firebaseConfig";
 import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -10,6 +13,17 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const router = useRouter();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserEmail(user.email);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
 
   const handleLogout = async () => {
     try {
@@ -35,43 +49,65 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         </div>
         <nav>
           <ul className="flex gap-10 text-2xl">
-            {!isLoggedIn ? (  // isLoggedIn が false のときにログイン、新規登録を表示
+            {!isLoggedIn ? ( // isLoggedIn が false のときにログイン、新規登録を表示
               <>
                 <li>
-                  <Link href="/auth/login" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/auth/login"
+                    className="text-cyan-50 hover:underline"
+                  >
                     ログイン
                   </Link>
                 </li>
                 <li>
-                  <Link href="/auth/register" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/auth/register"
+                    className="text-cyan-50 hover:underline"
+                  >
                     新規登録
                   </Link>
                 </li>
               </>
-            ) : (  // isLoggedIn が true のときにホーム、プロフィール、ログアウトを表示
+            ) : (
+              // isLoggedIn が true のときにホーム、プロフィール、ログアウトを表示
               <>
                 <li>
-                  <Link href="/i-team/home" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/i-team/home"
+                    className="text-cyan-50 hover:underline"
+                  >
                     ホーム
                   </Link>
                 </li>
                 <li>
-                  <Link href="/i-team/project-create" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/i-team/project-create"
+                    className="text-cyan-50 hover:underline"
+                  >
                     プロジェクト作成
                   </Link>
                 </li>
                 <li>
-                  <Link href="/i-team/project-list" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/i-team/project-list"
+                    className="text-cyan-50 hover:underline"
+                  >
                     参加プロジェクト
                   </Link>
                 </li>
                 <li>
-                  <Link href="/i-team/past-work" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/i-team/past-work"
+                    className="text-cyan-50 hover:underline"
+                  >
                     過去作品
                   </Link>
                 </li>
                 <li>
-                  <Link href="/i-team/profile" className="text-cyan-50 hover:underline">
+                  <Link
+                    href="/i-team/profile"
+                    className="text-cyan-50 hover:underline"
+                  >
                     プロフィール
                   </Link>
                 </li>
@@ -82,6 +118,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   >
                     ログアウト
                   </button>
+                </li>
+                <li>
+                  <p className="text-cyan-50">{userEmail}</p>
                 </li>
               </>
             )}

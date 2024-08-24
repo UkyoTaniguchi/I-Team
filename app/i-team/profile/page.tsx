@@ -17,7 +17,8 @@ const Profile = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserData = async () => { //ユーザデータを非同期で取得する関数
+    const fetchUserData = async () => {
+      //ユーザデータを非同期で取得する関数
       const user = auth.currentUser; //現在ログインしているユーザ情報取得
       if (user) {
         const docSnap = await getDoc(doc(db, "users", user.uid)); //現在のユーザの""users"ドキュメントを参照,取得
@@ -39,31 +40,40 @@ const Profile = () => {
     fetchUserData();
   }, [router]);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { //画像アップロードハンドラー
-    if (e.target.files && e.target.files[0]) { //ファイルを選択している場合
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //画像アップロードハンドラー
+    if (e.target.files && e.target.files[0]) {
+      //ファイルを選択している場合
       const file = e.target.files[0]; //ユーザが選択したファイルを変数に格納
       setNewProfileImage(file); // 新しい画像を一時的に保存
       setProfileImage(URL.createObjectURL(file)); // プレビューを更新
     }
   };
 
-  const handleSaveChanges = async () => { //変更保存ハンドラー
+  const handleSaveChanges = async () => {
+    //変更保存ハンドラー
     const user = auth.currentUser; //現在ログインしているユーザ情報取得
     if (user) {
       let downloadURL = profileImage; //プロフィール画像のURL格納
 
-      if (newProfileImage) { //新しい画像がある場合
+      if (newProfileImage) {
+        //新しい画像がある場合
         const storageRef = ref(storage, `profileImages/${user.uid}`); //ユーザのUIDを使ったファイルパス生成
         await uploadBytes(storageRef, newProfileImage); //パスを使って新しい画像ファイルをfirebase storageにアップロード
         downloadURL = await getDownloadURL(storageRef); //firebase storageにアップロードした公開URL取得
       }
 
-      await setDoc(doc(db, "users", user.uid), { //firestoreにデータの変更をマージ
-        accountName,
-        gender,
-        experienceLanguage,
-        profileImage: downloadURL,
-      }, { merge: true });
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          //firestoreにデータの変更をマージ
+          accountName,
+          gender,
+          experienceLanguage,
+          profileImage: downloadURL,
+        },
+        { merge: true }
+      );
 
       setIsEditing(false); // 編集モードを終了
       alert("プロフィールが更新されました。");
@@ -79,8 +89,8 @@ const Profile = () => {
               <Image
                 src={profileImage}
                 alt="Profile Image"
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: "cover" }}
                 className="object-cover"
               />
             </div>
@@ -107,7 +117,9 @@ const Profile = () => {
                 className="mt-1 border-2 rounded-md w-full p-2"
               />
             ) : (
-              <p className="mt-1 border-2 rounded-md w-full p-2">{accountName}</p>
+              <p className="mt-1 border-2 rounded-md w-full p-2">
+                {accountName}
+              </p>
             )}
           </div>
           <div className="mb-4">
@@ -136,7 +148,9 @@ const Profile = () => {
                 className="mt-1 border-2 rounded-md w-full p-2"
               />
             ) : (
-              <p className="mt-1 border-2 rounded-md w-full p-2">{experienceLanguage}</p>
+              <p className="mt-1 border-2 rounded-md w-full p-2">
+                {experienceLanguage}
+              </p>
             )}
           </div>
           <div className="flex justify-center">
