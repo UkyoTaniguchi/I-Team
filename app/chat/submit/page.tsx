@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebaseConfig";
-import { collection, getDoc, doc, query, orderBy } from "firebase/firestore";
+import {getDoc, doc, setDoc} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,8 +17,11 @@ const Submit = () => {
   const [link, setLink] = useState("");
   const [ideapoint, setIdeapoint] = useState("");
   const [background, setBackground] = useState("");
-  const [explain, setExplain] = useState("");
+  const [explain, setExplain] = useState<string[]>(["", ""]);
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [finish, setFinish] = useState(false);
   const router = useRouter();
+  const storage = getStorage();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
 
@@ -46,8 +50,65 @@ const Submit = () => {
     fetchProjectdata();
   }, [projectId, router]);
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const storageRef = ref(storage, `images/${projectId}/${file.name}`); // Storage に保存するパスを指定
+  
+      try {
+        // Firebase Storage に画像をアップロード
+        await uploadBytes(storageRef, file);
+  
+        // アップロードした画像のダウンロード URL を取得
+        const downloadURL = await getDownloadURL(storageRef);
+  
+        // ダウンロード URL を状態に保存
+        setSelectedImages((prevImages) => {
+          const newImages = [...prevImages];
+          newImages[index] = downloadURL;
+          return newImages;
+        });
+  
+      } catch (error) {
+        console.error("画像のアップロードに失敗しました:", error);
+      }
+    }
+  };
+  
+
+  const handleSubmit = async () => {
+    if (!projectId) {
+      console.error("プロジェクトIDが見つかりません");
+      return;
+    }
+
+    try{
+      const projectRef = doc(db, "projects", projectId);
+
+      await setDoc(projectRef, {
+        title,
+        description,
+        link,
+        ideapoint,
+        background,
+        explain,
+        createdAt: new Date(),
+        images: selectedImages
+      }, {merge: true});
+
+      console.log("プロジェクトが正常に更新されました");
+      setFinish(true);
+      router.push("/i-team/home");
+      
+    } catch(error){
+      console.error("プロジェクトの更新に失敗しました:", error);
+    }
+  };
+  
+
+
   return(
-    <div className="flex bg-gray-800 w-full min-h-screen justify-center p-4">
+    <div className="flex bg-gray-800 w-full min-h-screen justify-center p-10">
       <div className="w-11/12 h-full">
         <div className="flex justify-center my-12">
           <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
@@ -137,7 +198,7 @@ const Submit = () => {
         </div>
         <div className="flex justify-center my-14">
           <div className="border-b w-9/12 h-30 p-5 text-center">
-            <h1 className="text-cyan-50 text-5xl font-bold">使用方法</h1>
+            <h1 className="text-cyan-50 text-5xl font-bold">作品の概要</h1>
           </div>
         </div>
         <div className="w-full h-screen">
@@ -145,8 +206,12 @@ const Submit = () => {
             <div className="w-10/12 p-2 mb-4">
               <label className="text-cyan-50 text-xl mr-3">説明</label>
               <input
-                value={explain}
-                onChange={(e) => setExplain(e.target.value)}
+                value={explain[0]}
+                onChange={(e) => {
+                  const newExplain = [...explain];
+                  newExplain[0] = e.target.value;
+                  setExplain(newExplain);
+                }}
                 required
                 placeholder="アプリの写真の説明情報"
                 className="border rounded-lg h-10 w-1/2"
@@ -154,18 +219,38 @@ const Submit = () => {
             </div>
           </div>
           <div className="flex justify-center h-5/6">
-            <div className="relative w-10/12 h-5/6 border">
-              
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
+              {selectedImages[0] ? (
+                <img
+                  src={selectedImages[0]}
+                  alt="Selected"
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <div className="h-20">
+                  <p className="text-cyan-50 text-center text-2xl">ここに画像が表示されます</p>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, 0)} // 最初の画像を選択
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
             </div>
           </div> 
         </div>
         <div className="w-full h-screen">
           <div className="flex justify-center">
-            <div className="w-10/12 p-2 mb-4">
+            <div className="w-11/12 p-2 mb-4">
               <label className="text-cyan-50 text-xl mr-3">説明</label>
               <input
-                value={explain}
-                onChange={(e) => setExplain(e.target.value)}
+                value={explain[1]}
+                onChange={(e) => {
+                  const newExplain = [...explain];
+                  newExplain[1] = e.target.value;
+                  setExplain(newExplain);
+                }}
                 required
                 placeholder="アプリの写真の説明情報"
                 className="border rounded-lg h-10 w-1/2"
@@ -173,10 +258,29 @@ const Submit = () => {
             </div>
           </div>
           <div className="flex justify-center h-5/6">
-            <div className="w-10/12 h-5/6 border">
-
+            <div className="flex relative w-10/12 h-5/6 border justify-center items-center">
+              {selectedImages[1] ? (
+                <img
+                  src={selectedImages[1]}
+                  alt="Selected"
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <div className="h-20">
+                  <p className="text-cyan-50 text-center text-2xl">ここに画像が表示されます</p>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, 1)} // 2番目の画像を選択
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
             </div>
           </div> 
+          <div className="flex justify-center">
+            <button onClick={handleSubmit} className="bg-blue-500 text-cyan-50 h-14 text-xl p-3 rounded-lg hover:bg-blue-600">投稿する</button>
+          </div>
         </div>
       </div>
     </div>
