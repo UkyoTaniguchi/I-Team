@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/i-team/project-list" className="text-cyan-50 hover:underline">
+                  <Link href="/i-team/past-work" className="text-cyan-50 hover:underline">
                     過去作品
                   </Link>
                 </li>

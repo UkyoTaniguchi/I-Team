@@ -203,7 +203,7 @@ const ChatPage = () => {
           </Link>
         </div>
         <div className="w-80 h-44">
-          <Link href="/chat/submit">
+          <Link href="/chat/submit?projectId=${projectId}">
             <div className="relative w-full h-full rounded-3xl overflow-hidden">
               <Image
                 src="/submit.jpeg"
