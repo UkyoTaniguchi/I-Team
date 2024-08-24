@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface CreateChannelButtonProps {
@@ -13,6 +14,7 @@ const CreateChannelButton: React.FC<CreateChannelButtonProps> = ({
   members,
   channelName,
 }) => {
+  const router = useRouter();
   const createChannel = async () => {
     // メンバーとチャンネル名をPOSTで送信
     const response = await fetch("/api/createChannel", {
@@ -27,12 +29,20 @@ const CreateChannelButton: React.FC<CreateChannelButtonProps> = ({
 
     if (data.success) {
       alert("チャンネルが作成されました！Slackを確認してください！");
+      router.push("/i-team/project-list");
     } else {
       alert(`エラーが発生しました: ${data.error}`);
     }
   };
 
-  return <button onClick={createChannel}>チャンネル作成</button>;
+  return (
+    <button
+      onClick={createChannel}
+      className="text-blue-400 text-2xl font-extrabold hover:text-blue-200"
+    >
+      Slackチャンネルを作成
+    </button>
+  );
 };
 
 export default CreateChannelButton;

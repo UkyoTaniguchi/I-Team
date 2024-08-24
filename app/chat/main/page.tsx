@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { User, onAuthStateChanged } from "firebase/auth";
+import CreateChannelButton from "@/app/components/CreateChannelButton";
 
 // メンバーをプロジェクトへ追加・システムメッセージの送信する関数
 const incrementProjectMemberCount = async (
@@ -63,8 +64,9 @@ const incrementProjectMemberCount = async (
     }
 
     // チームの制限人数に達したとき
-    if (projectData.joinauth.length >= teamSize) {
+    if (projectData.joinauth.length > teamSize) {
       router.push("/i-team/home");
+      console.log("チームの制限人数に達しました");
     }
   }
 };
@@ -75,13 +77,23 @@ const ChatPage = () => {
   const [userProfileImages, setUserProfileImages] = useState<{
     [key: string]: string;
   }>({});
+  const [members, setMembers] = useState<string[]>([]); // メンバーのメールアドレスを格納
+  const [channelName, setChannelName] = useState<string>(""); // チャンネル名を格納
+  const [isRecruitmentClosed, setIsRecruitmentClosed] = useState(false); // 募集状態を格納
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
 
+  // 募集状態を切り替える関数
+  const handleToggleRecruitment = () => {
+    setIsRecruitmentClosed(!isRecruitmentClosed);
+  };
+
   useEffect(() => {
     if (!projectId) {
       router.push("/i-team/home");
+      console.log("プロジェクトIDがありません");
       return;
     }
 
@@ -137,6 +149,36 @@ const ChatPage = () => {
     fetchProfileImages();
   }, [messages]);
 
+  // プロジェクトメンバーのメールアドレスとタイトルを取得
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      if (projectId) {
+        const projectDocRef = doc(db, "projects", projectId);
+        const projectDocSnap = await getDoc(projectDocRef);
+
+        if (projectDocSnap.exists()) {
+          const projectData = projectDocSnap.data();
+          const memberEmails: string[] = [];
+
+          // メンバーのUIDからメールアドレスを取得
+          for (const userId of projectData.joinauth) {
+            const userDoc = await getDoc(doc(db, "users", userId));
+            if (userDoc.exists()) {
+              const userEmail = userDoc.data()?.email;
+              if (userEmail) memberEmails.push(userEmail);
+            }
+          }
+
+          setMembers(memberEmails); // メンバーのメールアドレスを設定
+          setChannelName(projectData.title); // チャンネル名をプロジェクトタイトルに設定
+          console.log(memberEmails);
+        }
+      }
+    };
+
+    fetchProjectData();
+  }, [projectId]);
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -159,118 +201,128 @@ const ChatPage = () => {
     }
   };
 
-  const handleStartProject = () => {
-    // プロジェクト開始のロジックを実装
-  };
-
   return (
-    <div className="h-screen bg-gray-800 p-4">
-      <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto h-4/6 my-4">
-        {messages.map((message) =>
-          auth.currentUser?.uid === message.userId ? (
-            <div key={message.id} className="p-2 text-right">
-              <p className="text-white">{message.text}</p>
-            </div>
-          ) : (
-            <div key={message.id} className="flex items-center">
-              {userProfileImages[message.userId] ? (
-                <div className="relative w-10 h-10 rounded-full bg-white">
-                  <Image
-                    src={userProfileImages[message.userId]}
-                    alt="profile Image"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="object-cover"
-                  />
-                </div>
-              ) : message.userId === "system" ? (
-                <div className="flex w-12 h-12 rounded-full text-xs bg-white items-center justify-center">
-                  <p className="text-center">bot</p>
+    <div
+      className=" bg-gray-800 py-4 px-8"
+      style={{ height: "calc(100vh - 7rem)" }}
+    >
+      <h1 className="text-3xl text-white p-5">グループチャット</h1>
+      <div className="flex w-full h-5/6">
+        <div className="w-3/4">
+          {/* メッセージのスタイルを自分・BOT・メンバーによって変更 */}
+          <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto my-4 h-4/5">
+            {messages.map((message) =>
+              auth.currentUser?.uid === message.userId ? (
+                <div key={message.id} className="p-5 text-right">
+                  <p className="text-white text-xl">{message.text}</p>
                 </div>
               ) : (
-                <div className="flex w-12 h-12 rounded-full text-xs bg-white items-center">
-                  <p className="text-center">No Image</p>
+                <div key={message.id} className="flex items-center">
+                  {userProfileImages[message.userId] ? (
+                    <div className="relative w-10 h-10 rounded-full bg-white">
+                      <Image
+                        src={userProfileImages[message.userId]}
+                        alt="profile Image"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : message.userId === "botID" ? (
+                    <div className="flex w-12 h-12 rounded-full text-xs bg-white items-center justify-center">
+                      <p className="text-center">BOT</p>
+                    </div>
+                  ) : (
+                    <div className="flex w-12 h-12 rounded-full text-xs bg-white items-center">
+                      <p className="text-center">No Image</p>
+                    </div>
+                  )}
+                  <div className="p-5 text-left">
+                    <p
+                      className={`${
+                        message.userId === "botID"
+                          ? "text-red-500"
+                          : "text-cyan-50"
+                      }`}
+                    >
+                      <strong>{message.userName}</strong>
+                    </p>
+                    <p
+                      className={`text-xl ${
+                        message.userId === "botID"
+                          ? "text-red-500"
+                          : "text-white"
+                      }`}
+                    >
+                      {message.text}
+                    </p>
+                  </div>
                 </div>
-              )}
+              )
+            )}
+          </div>
 
-              <div className="p-2 text-left">
-                <p className="text-cyan-50">
-                  <strong>{message.userName}</strong>
-                </p>
-                <p className="text-white">{message.text}</p>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-      <div>
-        <form onSubmit={handleSendMessage} className="flex">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-grow p-2 rounded-l-lg border-none"
-            placeholder="メッセージを入力..."
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600"
+          <form onSubmit={handleSendMessage} className="flex">
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-grow p-2 rounded-l-lg border-none"
+              placeholder="メッセージを入力..."
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600"
+            >
+              送信
+            </button>
+          </form>
+        </div>
+
+        <div className="flex flex-col justify-evenly items-center w-1/4 mb-20">
+          {/* 募集を締め切る/再開するボタン */}
+          <div
+            className={`w-80 border p-3 ${
+              isRecruitmentClosed ? "bg-slate-500" : "border-blue-400"
+            }`}
           >
-            送信
-          </button>
-        </form>
-      </div>
-      <div className="flex mt-4 justify-evenly">
-        <div className="w-80 h-44">
-          <button onClick={handleStartProject} className="w-full h-full">
-            <div className="relative w-full h-full rounded-3xl overflow-hidden">
-              <Image
-                src="/start.jpg"
-                alt="start_button"
-                fill
-                style={{ objectFit: "cover", filter: "blur(2px)" }}
-              />
-              <div className="absolute inset-0 flex justify-center items-center">
-                <p className="text-blue-400 text-3xl font-extrabold">
-                  このメンバーで始める
-                </p>
+            <button onClick={handleToggleRecruitment} className="w-full h-full">
+              <div className="relative w-full h-full">
+                <div className="flex justify-center items-center">
+                  <p
+                    className={`text-2xl font-extrabold hover:text-blue-200 ${
+                      isRecruitmentClosed ? "text-slate-300" : "text-blue-400"
+                    }`}
+                  >
+                    {isRecruitmentClosed ? "募集を再開する" : "募集を締め切る"}
+                  </p>
+                </div>
+              </div>
+            </button>
+          </div>
+
+          {/* Slackチャンネル作成ボタン */}
+          <div className="w-80 border border-blue-400 p-3">
+            <div className="relative w-full h-full">
+              <div className="flex justify-center items-center">
+                <CreateChannelButton
+                  members={members}
+                  channelName={channelName}
+                />
               </div>
             </div>
-          </button>
-        </div>
-        <div className="w-80 h-44">
-          <Link href="/chat/submit">
-            <div className="relative w-full h-full rounded-3xl overflow-hidden bg-white">
-              <Image
-                src="/slack2.webp"
-                alt="start_button"
-                fill
-                style={{ objectFit: "contain", filter: "blur(2px)" }}
-              />
-              <div className="absolute inset-0 flex justify-center items-center">
-                <p className="text-blue-600 text-3xl font-extrabold">
-                  Slackへ移動
-                </p>
-              </div>
-            </div>
-          </Link>
-        </div>
-        <div className="w-80 h-44">
-          <Link href={`/chat/submit?projectId=${projectId}`}>
-            <div className="relative w-full h-full rounded-3xl overflow-hidden">
-              <Image
-                src="/submit.jpeg"
-                alt="start_button"
-                fill
-                style={{ objectFit: "cover", filter: "blur(3px)" }}
-              />
-              <div className="absolute inset-0 flex justify-center items-center">
-                <p className="text-blue-600 text-3xl font-extrabold">
+          </div>
+
+          {/* 作品を投稿するボタン */}
+          <div className="w-80 border border-blue-400 p-3">
+            <Link href={`/chat/submit?projectId=${projectId}`}>
+              <div className="flex justify-center items-center">
+                <p className="text-blue-400 text-2xl font-extrabold hover:text-blue-200">
                   作品を投稿する
                 </p>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
