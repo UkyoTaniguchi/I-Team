@@ -31,6 +31,7 @@ const ProjectCreate = () => {
           language,
           teamSize,
           duration,
+          end: false,
           createdAt: new Date(),
           createdBy: user.uid, // 作成者のUIDを保存
           joinauth: [user.uid], //プロジェクト参加者を保存

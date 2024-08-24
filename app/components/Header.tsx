@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     href="/i-team/project-create"
                     className="text-cyan-50 hover:underline"
                   >
-                    プロジェクト作成
+                    チーム作成
                   </Link>
                 </li>
                 <li>
