@@ -35,7 +35,51 @@ const Myproject = () => {
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
-              project.joinauth.includes(auth.currentUser?.uid) && (
+              project.joinauth.includes(auth.currentUser?.uid) && !project.end && (
+                <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+                  <div className="flex w-full">
+                    <div className="w-1/5 py-3 flex flex-col justify-center items-center">
+                      <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
+                        {project.creatorProfileImage ? (
+                          <Image
+                            src={project.creatorProfileImage}
+                            alt="Creator Profile Image"
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="rounded-full"
+                          />
+                        ) : (
+                          <div className="flex w-16 h-16 text-black items-center justify-center text-center">
+                            No Image
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-center">
+                        <p>募集者</p>
+                      </div>
+                    </div>
+                    <div className="w-4/5 p-3 mt-3 rounded-lg">
+                      <h2 className="text-2xl font-bold mb-3">
+                        {project.title}
+                      </h2>
+                      <p>開発内容: {project.description}</p>
+                      <p>開発言語: {project.language}</p>
+                      <p>開発人数: {project.teamSize}</p>
+                      <p>開発期間: {project.duration}</p>
+                      <div className="flex justify-center">
+                        <Link
+                          href={`/chat/main?projectId=${project.id}`}
+                          className="bg-blue-600 rounded p-2 hover:bg-blue-700"
+                        >
+                          チャットに移動する
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {project.joinauth &&
+              project.joinauth.includes(auth.currentUser?.uid) && project.end && (
                 <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
