@@ -228,10 +228,12 @@ const Submit = () => {
           <div className="flex justify-center h-5/6">
             <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
               {selectedImages[0] ? (
-                <img
+                <Image
                   src={selectedImages[0]}
-                  alt="Selected"
-                  className="object-cover w-full h-full"
+                  alt="selected1"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
                 />
               ) : (
                 <div className="h-20">
@@ -269,10 +271,12 @@ const Submit = () => {
           <div className="flex justify-center h-5/6">
             <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
               {selectedImages[1] ? (
-                <img
+                <Image
                   src={selectedImages[1]}
-                  alt="Selected"
-                  className="object-cover w-full h-full"
+                  alt="selected2"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
                 />
               ) : (
                 <div className="h-20">
