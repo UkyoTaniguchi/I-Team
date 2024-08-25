@@ -59,10 +59,26 @@ const Home = () => {
                   </div>
                   <div className="w-4/5 p-3 mt-3 rounded-lg">
                     <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
-                    <p>開発内容: {project.description}</p>
-                    <p>開発言語: {project.language}</p>
-                    <p>開発人数: {project.teamSize}</p>
-                    <p>開発期間: {project.duration}</p>
+                    <p className="text-orange-600 font-bold">
+                      開発内容:{" "}
+                      <span className="text-white">{project.description}</span>
+                    </p>
+                    <p className="text-orange-600 font-bold">
+                      開発技術:{" "}
+                      <span className="text-white">{project.language}</span>
+                    </p>
+                    <p className="text-orange-600 font-bold">
+                      開発人数:{" "}
+                      <span className="text-white">{project.teamSize}</span>
+                    </p>
+                    <p className="text-orange-600 font-bold">
+                      開発期間:{" "}
+                      <span className="text-white">{project.duration}</span>
+                    </p>
+                    <p className="text-orange-600 font-bold">
+                      そのほか:{" "}
+                      <span className="text-white">{project.others}</span>
+                    </p>
                     <div className="flex justify-center">
                       <Link
                         href={`/chat/main?projectId=${project.id}`}
