@@ -138,14 +138,14 @@ const Project = () => {
                 </div>
             </div>
         </div> 
-        <div className="flex flex-col justify-between h-screen w-full p-4 border">
+        <div className="flex flex-col justify-between h-screen w-full p-4">
             <div className="mt-14">
                 <div className="flex justify-center">
                     <p className="text-xl w-11/12 h-10 pb-2">説明：{explain[1]}</p>
                 </div>
             </div>
-            <div className="flex justify-center h-full border">
-                <div className="flex relative w-11/12 h-full border justify-center items-center">
+            <div className="flex justify-center h-full">
+                <div className="flex relative w-11/12 h-full justify-center items-center">
                     <Image
                         src={selectedImages[1]}
                         alt="Selected"
