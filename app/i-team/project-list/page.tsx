@@ -118,12 +118,6 @@ const Myproject = () => {
                       <p>開発人数: {project.teamSize}</p>
                       <p>開発期間: {project.duration}</p>
                       <div className="flex justify-center">
-                        {/* <Link
-                          href={`/chat/main?projectId=${project.id}`}
-                          className="bg-blue-600 rounded p-2 hover:bg-blue-700"
-                        >
-                          チャットに移動する
-                        </Link> */}
                       </div>
                     </div>
                   </div>
