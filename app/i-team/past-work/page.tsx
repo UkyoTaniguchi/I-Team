@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebaseConfig";
-import { collection, getDocs, doc, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; //インポート
@@ -32,10 +32,10 @@ const Pastwork = () => {
         <h1 className="text-4xl font-bold w-5/6 mb-8 ml-32 p-3 border-b">
           みんなの制作物一覧
         </h1>
-        {projects.map((project) => (
-          <div key={project.id} className="flex justify-center">
-            {project.end && (
-              <div className="bg-sky-900 w-80 h-96 border border-gray-700 rounded-2xl p-1 mb-4">
+        <div className="flex flex-wrap justify-center gap-4">
+          {projects.map((project) => (
+            project.end && (
+              <div key={project.id} className="bg-sky-900 w-80 h-96 border border-gray-700 rounded-2xl p-1 mb-4">
                 <div className="flex justify-center items-end h-36 w-full">
                   <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
                     {project.creatorProfileImage ? (
@@ -67,9 +67,9 @@ const Pastwork = () => {
                   </Link>
                 </div>
               </div>
-            )}
-          </div>
-        ))}
+            )
+          ))}
+        </div>
       </div>
     </div>
   );

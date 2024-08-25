@@ -62,7 +62,7 @@ const Project = () => {
                 <h1 className="text-6xl text-center mb-12 font-bold">{title}</h1>
                 <h2 className="text-4xl text-center mb-2 font-medium">開発内容</h2>
                 <div className="flex justify-center mb-12">
-                    <p className="bg-sky-900 w-4/6 h-60 p-4 rounded-xl text-3xl">{description}</p>
+                    <p className="bg-sky-900 w-4/6 h-60 overflow-y-auto p-4 rounded-xl text-2xl">{description}</p>
                 </div>
                 <h2 className="text-4xl text-center mb-2 font-medium">リンク</h2>
                 <div className="flex justify-center">
@@ -91,7 +91,7 @@ const Project = () => {
                     <div className="text-center w-full my-2">
                         <h1 className="text-cyan-50 text-3xl font-semibold">ここが魅力！</h1>
                     </div>
-                    <div className="flex w-full h-44 justify-center items-center">
+                    <div className="flex w-full h-44 overflow-y-auto justify-center items-center">
                         <p className="text-xl">{ideapoint}</p>
                     </div>
                 </div>
@@ -109,60 +109,50 @@ const Project = () => {
                     <div className="text-center w-full my-2">
                         <h1 className="text-cyan-50 text-3xl font-semibold">作品の背景</h1>
                     </div>
-                    <div className="flex w-full h-44 justify-center items-center">
+                    <div className="flex w-full h-44 overflow-y-auto justify-center items-center">
                         <p className="text-xl">{background}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div className="h-screen w-full mt-24 p-4">
+        <div className="flex flex-col justify-between h-screen w-full mt-24 p-4">
             <div className="">
                 <div className="flex justify-center">
                     <h1 className="text-5xl text-center font-bold w-9/12 pb-5 border-b">プロジェクト詳細</h1>
                 </div>
             </div>
-            <div className="mt-14">
+            <div className="mt-5">
                 <div className="flex justify-center">
                     <p className="text-xl w-11/12 h-10 pb-2">説明：{explain[0]}</p>
                 </div>
             </div>
-            <div className="flex justify-center">
-                <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
-                    {/* <Image
+            <div className="flex justify-center h-full">
+                <div className="flex relative w-11/12 h-full justify-center items-center">
+                    <Image
                         src={selectedImages[0]}
                         alt="Selected"
                         fill
                         style={{objectFit:'cover'}}
                         className="object-cover w-full h-full"
-                    /> */}
-                    <img
-                  src={selectedImages[0]}
-                  alt="Selected1"
-                  className="object-cover w-full h-full"
-                />
+                    />
                 </div>
             </div>
         </div> 
-        <div className="h-screen w-full p-4">
+        <div className="flex flex-col justify-between h-screen w-full p-4 border">
             <div className="mt-14">
                 <div className="flex justify-center">
                     <p className="text-xl w-11/12 h-10 pb-2">説明：{explain[1]}</p>
                 </div>
             </div>
-            <div className="flex justify-center">
-                <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
-                    {/* <Image
-                        src={selectedImages[0]}
+            <div className="flex justify-center h-full border">
+                <div className="flex relative w-11/12 h-full border justify-center items-center">
+                    <Image
+                        src={selectedImages[1]}
                         alt="Selected"
                         fill
                         style={{objectFit:'cover'}}
                         className="object-cover w-full h-full"
-                    /> */}
-                    <img
-                  src={selectedImages[1]}
-                  alt="Selected2"
-                  className="object-cover w-full h-full"
-                />
+                    />
                 </div>
             </div>
         </div>
