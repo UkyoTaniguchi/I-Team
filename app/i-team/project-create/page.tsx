@@ -11,6 +11,7 @@ const ProjectCreate = () => {
   const [language, setLanguage] = useState("");
   const [teamSize, setTeamSize] = useState("2");
   const [duration, setDuration] = useState("");
+  const [others, setothers] = useState("");
 
   const router = useRouter();
 
@@ -31,6 +32,7 @@ const ProjectCreate = () => {
           language,
           teamSize,
           duration,
+          others,
           end: false,
           createdAt: new Date(),
           createdBy: user.uid, // 作成者のUIDを保存
@@ -44,6 +46,7 @@ const ProjectCreate = () => {
         setLanguage("");
         setTeamSize("2");
         setDuration(""); // フォーム内を空にリセット
+        setothers("");
 
         router.push(`/chat/main?projectId=${docRef.id}`);
       }
@@ -74,12 +77,12 @@ const ProjectCreate = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          rows={10}
+          rows={5}
           className="border rounded-lg w-1/2"
         />
       </div>
       <div className="flex justify-center mb-8">
-        <label className="text-cyan-50 text-3xl mr-3">開発言語</label>
+        <label className="text-cyan-50 text-3xl mr-3">使用技術</label>
         <input
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
@@ -102,16 +105,26 @@ const ProjectCreate = () => {
           <option value="6">6人</option>
         </select>
       </div>
-      <div className="flex justify-center mb-8">
-        <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
-        <input
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          required
-          className="border rounded-lg w-1/2"
-        />
-      </div>
       <div className="text-center">
+        <div className="flex justify-center mb-8">
+          <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
+          <input
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            required
+            className="border rounded-lg w-1/2"
+          />
+        </div>
+        <div className="flex justify-center mb-8">
+          <label className="text-cyan-50 text-3xl mr-3">そのほか</label>
+          <textarea
+            value={others}
+            onChange={(e) => setothers(e.target.value)}
+            required
+            rows={5}
+            className="border rounded-lg w-1/2"
+          />
+        </div>
         <button
           type="submit"
           className="bg-blue-500 text-white h-12 w-24 rounded-lg px-4 py-2 hover:bg-blue-600"

@@ -35,7 +35,8 @@ const Myproject = () => {
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
-              project.joinauth.includes(auth.currentUser?.uid) && !project.end && (
+              project.joinauth.includes(auth.currentUser?.uid) &&
+              !project.end && (
                 <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
@@ -62,16 +63,34 @@ const Myproject = () => {
                       <h2 className="text-2xl font-bold mb-3">
                         {project.title}
                       </h2>
-                      <p>開発内容: {project.description}</p>
-                      <p>開発言語: {project.language}</p>
-                      <p>開発人数: {project.teamSize}</p>
-                      <p>開発期間: {project.duration}</p>
+                      <p className="text-orange-600 font-bold">
+                        開発内容:{" "}
+                        <span className="text-white">
+                          {project.description}
+                        </span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発技術:{" "}
+                        <span className="text-white">{project.language}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発人数:{" "}
+                        <span className="text-white">{project.teamSize}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発期間:{" "}
+                        <span className="text-white">{project.duration}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        そのほか:{" "}
+                        <span className="text-white">{project.others}</span>
+                      </p>
                       <div className="flex justify-center">
                         <Link
                           href={`/chat/main?projectId=${project.id}`}
                           className="bg-blue-600 rounded p-2 hover:bg-blue-700"
                         >
-                          チャットに移動する
+                          参加する
                         </Link>
                       </div>
                     </div>
@@ -80,13 +99,16 @@ const Myproject = () => {
               )}
           </div>
         ))}
-        <h1 className="text-4xl font-bold mb-8 ml-32">過去の参加プロジェクト</h1>
+        <h1 className="text-4xl font-bold mb-8 ml-32">
+          過去の参加プロジェクト
+        </h1>
         {projects.map((project) => (
           <div key={project.id} className="flex justify-center">
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
-              project.joinauth.includes(auth.currentUser?.uid) && project.end && (
+              project.joinauth.includes(auth.currentUser?.uid) &&
+              project.end && (
                 <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
@@ -113,11 +135,35 @@ const Myproject = () => {
                       <h2 className="text-2xl font-bold mb-3">
                         {project.title}
                       </h2>
-                      <p>開発内容: {project.description}</p>
-                      <p>開発言語: {project.language}</p>
-                      <p>開発人数: {project.teamSize}</p>
-                      <p>開発期間: {project.duration}</p>
+                      <p className="text-orange-600 font-bold">
+                        開発内容:{" "}
+                        <span className="text-white">
+                          {project.description}
+                        </span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発技術:{" "}
+                        <span className="text-white">{project.language}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発人数:{" "}
+                        <span className="text-white">{project.teamSize}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        開発期間:{" "}
+                        <span className="text-white">{project.duration}</span>
+                      </p>
+                      <p className="text-orange-600 font-bold">
+                        そのほか:{" "}
+                        <span className="text-white">{project.others}</span>
+                      </p>
                       <div className="flex justify-center">
+                        <Link
+                          href={`/chat/main?projectId=${project.id}`}
+                          className="bg-blue-600 rounded p-2 hover:bg-blue-700"
+                        >
+                          参加する
+                        </Link>
                       </div>
                     </div>
                   </div>
