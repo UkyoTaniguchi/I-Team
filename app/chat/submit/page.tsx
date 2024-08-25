@@ -209,20 +209,16 @@ const Submit = () => {
               <h1 className="text-cyan-50 text-5xl font-bold">作品の概要</h1>
             </div>
           </div>
-          <div className="w-full h-screen">
-            <div className="flex justify-center">
-              <div className="w-11/12 p-2 mb-4">
-                <label className="text-cyan-50 text-xl mr-3">説明</label>
-                <input
-                  value={explain[0]}
-                  onChange={(e) => {
-                    const newExplain = [...explain];
-                    newExplain[0] = e.target.value;
-                    setExplain(newExplain);
-                  }}
-                  required
-                  placeholder="アプリの写真の説明情報"
-                  className="border rounded-lg h-10 w-1/2"
+
+          <div className="flex justify-center h-5/6">
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
+              {selectedImages[0] ? (
+                <Image
+                  src={selectedImages[0]}
+                  alt="selected1"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
                 />
               </div>
             </div>
@@ -250,20 +246,15 @@ const Submit = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-screen">
-            <div className="flex justify-center">
-              <div className="w-11/12 p-2 mb-4">
-                <label className="text-cyan-50 text-xl mr-3">説明</label>
-                <input
-                  value={explain[1]}
-                  onChange={(e) => {
-                    const newExplain = [...explain];
-                    newExplain[1] = e.target.value;
-                    setExplain(newExplain);
-                  }}
-                  required
-                  placeholder="アプリの写真の説明情報"
-                  className="border rounded-lg h-10 w-1/2"
+          <div className="flex justify-center h-5/6">
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
+              {selectedImages[1] ? (
+                <Image
+                  src={selectedImages[1]}
+                  alt="selected2"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
                 />
               </div>
             </div>
