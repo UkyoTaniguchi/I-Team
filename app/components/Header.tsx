@@ -125,11 +125,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     href="/i-team/past-work"
                     className="text-cyan-50 hover:underline"
                   >
-                    過去作品
+                    みんなの制作物
                   </Link>
                 </li>
 
-                <li className="ml-80">
+                <li className="ml-60">
                   <p
                     onClick={togglePopup}
                     className="text-cyan-50 cursor-pointer hover:underline user-email"
