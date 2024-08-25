@@ -199,7 +199,7 @@ const ChatPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <div
         className=" bg-gray-800 py-4 px-8"
         style={{ height: "calc(100vh - 10rem)" }}
