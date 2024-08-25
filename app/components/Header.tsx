@@ -14,6 +14,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,6 +34,31 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       console.error("ログアウトに失敗しました:", error);
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // ポップアップが表示されていて、かつクリックされた場所がポップアップやuserEmail要素でない場合にポップアップを閉じる
+      if (
+        isPopupVisible &&
+        event.target instanceof HTMLElement &&
+        !event.target.closest(".popup") &&
+        !event.target.closest(".user-email")
+      ) {
+        setPopupVisible(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isPopupVisible]);
+
+  const togglePopup = () => {
+    setPopupVisible(!isPopupVisible);
+  };
+
   return (
     <div className="flex w-full h-28">
       <div className="flex items-center bg-gray-800 w-full">
@@ -48,8 +74,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
           </Link>
         </div>
         <nav>
-          <ul className="flex gap-10 text-2xl">
-            {!isLoggedIn ? ( // isLoggedIn が false のときにログイン、新規登録を表示
+          <ul className="flex gap-10 text-xl">
+            {!isLoggedIn ? (
               <>
                 <li>
                   <Link
@@ -69,14 +95,13 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                 </li>
               </>
             ) : (
-              // isLoggedIn が true のときにホーム、プロフィール、ログアウトを表示
               <>
                 <li>
                   <Link
                     href="/i-team/home"
                     className="text-cyan-50 hover:underline"
                   >
-                    ホーム
+                    チームを探す
                   </Link>
                 </li>
                 <li>
@@ -84,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     href="/i-team/project-create"
                     className="text-cyan-50 hover:underline"
                   >
-                    チーム作成
+                    新たなチームを作成
                   </Link>
                 </li>
                 <li>
@@ -92,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     href="/i-team/project-list"
                     className="text-cyan-50 hover:underline"
                   >
-                    参加プロジェクト
+                    参加中のチーム
                   </Link>
                 </li>
                 <li>
@@ -103,24 +128,30 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     過去作品
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/i-team/profile"
-                    className="text-cyan-50 hover:underline"
+
+                <li className="ml-80">
+                  <p
+                    onClick={togglePopup}
+                    className="text-cyan-50 cursor-pointer hover:underline user-email"
                   >
-                    プロフィール
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="text-cyan-50 hover:underline"
-                  >
-                    ログアウト
-                  </button>
-                </li>
-                <li>
-                  <p className="text-cyan-50">{userEmail}</p>
+                    {userEmail}
+                  </p>
+                  {isPopupVisible && (
+                    <div className="absolute bg-gray-700 text-white right-0 mt-2 mr-3 w-40 py-2 rounded-lg shadow-lg popup">
+                      <Link
+                        href="/i-team/profile"
+                        className="block px-4 py-2 hover:bg-gray-600"
+                      >
+                        プロフィール
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block px-4 py-2 hover:bg-gray-600"
+                      >
+                        ログアウト
+                      </button>
+                    </div>
+                  )}
                 </li>
               </>
             )}

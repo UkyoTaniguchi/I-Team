@@ -31,7 +31,9 @@ const CreateChannelButton: React.FC<CreateChannelButtonProps> = ({
       alert("チャンネルが作成されました！Slackを確認してください！");
       router.push("/i-team/project-list");
     } else {
-      alert(`エラーが発生しました: ${data.error}`);
+      alert(
+        `[エラー]slackのメールアドレスが正しいか確認してください: ${data.error}`
+      );
     }
   };
 

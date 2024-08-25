@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "../../firebaseConfig";
-import { collection, addDoc, doc,  getDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 
 const ProjectCreate = () => {
   const [title, setTitle] = useState("");
@@ -54,8 +54,12 @@ const ProjectCreate = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-800 p-4">
-      <div className="flex justify-center my-12">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-gray-800 p-4"
+      style={{ height: "calc(100vh - 7rem)" }}
+    >
+      <div className="flex justify-center mb-10">
         <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
         <input
           value={title}
@@ -64,7 +68,7 @@ const ProjectCreate = () => {
           className="border rounded-lg h-10 w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-10">
         <label className="text-cyan-50 text-3xl mr-3">開発内容</label>
         <textarea
           value={description}
@@ -74,7 +78,7 @@ const ProjectCreate = () => {
           className="border rounded-lg w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-10">
         <label className="text-cyan-50 text-3xl mr-3">開発言語</label>
         <input
           value={language}
@@ -83,7 +87,7 @@ const ProjectCreate = () => {
           className="border rounded-lg w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-10">
         <label className="text-cyan-50 text-3xl mr-3">開発人数</label>
         <select
           value={teamSize}
@@ -98,7 +102,7 @@ const ProjectCreate = () => {
           <option value="6">6人</option>
         </select>
       </div>
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-10">
         <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
         <input
           value={duration}
@@ -108,11 +112,13 @@ const ProjectCreate = () => {
         />
       </div>
       <div className="text-center">
-        <button type="submit" className="bg-blue-500 text-white h-12 w-24 rounded-lg px-4 py-2 hover:bg-blue-600">
-            作成
+        <button
+          type="submit"
+          className="bg-blue-500 text-white h-12 w-24 rounded-lg px-4 py-2 hover:bg-blue-600"
+        >
+          作成
         </button>
       </div>
-      
     </form>
   );
 };

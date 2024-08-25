@@ -213,8 +213,10 @@ const ChatPage = () => {
           <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto my-4 h-4/5">
             {messages.map((message) =>
               auth.currentUser?.uid === message.userId ? (
-                <div key={message.id} className="p-5 text-right">
-                  <p className="text-white text-xl">{message.text}</p>
+                <div key={message.id} className="p-5 flex justify-end">
+                  <p className="text-white text-l bg-green-500 p-3 rounded-3xl px-4">
+                    {message.text}
+                  </p>
                 </div>
               ) : (
                 <div key={message.id} className="flex items-center">
@@ -248,7 +250,7 @@ const ChatPage = () => {
                       <strong>{message.userName}</strong>
                     </p>
                     <p
-                      className={`text-xl ${
+                      className={`text-l ${
                         message.userId === "botID"
                           ? "text-red-500"
                           : "text-white"
