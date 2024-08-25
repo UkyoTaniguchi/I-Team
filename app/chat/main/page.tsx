@@ -77,9 +77,9 @@ const ChatPage = () => {
   const [userProfileImages, setUserProfileImages] = useState<{
     [key: string]: string;
   }>({});
-  const [members, setMembers] = useState<string[]>([]); // メンバーのメールアドレスを格納
-  const [channelName, setChannelName] = useState<string>(""); // チャンネル名を格納
-  const [isRecruitmentClosed, setIsRecruitmentClosed] = useState(false); // 募集状態を格納
+  const [members, setMembers] = useState<string[]>([]);
+  const [channelName, setChannelName] = useState<string>("");
+  const [isRecruitmentClosed, setIsRecruitmentClosed] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -137,7 +137,6 @@ const ChatPage = () => {
         }
       }
 
-      // 新しく取得したプロフィール画像がある場合のみ、状態を更新
       if (Object.keys(newProfileImages).length > 0) {
         setUserProfileImages((prevImages) => ({
           ...prevImages,
@@ -147,9 +146,8 @@ const ChatPage = () => {
     };
 
     fetchProfileImages();
-  }, [messages]);
+  }, [messages, userProfileImages]);
 
-  // プロジェクトメンバーのメールアドレスとタイトルを取得
   useEffect(() => {
     const fetchProjectData = async () => {
       if (projectId) {
@@ -160,7 +158,6 @@ const ChatPage = () => {
           const projectData = projectDocSnap.data();
           const memberEmails: string[] = [];
 
-          // メンバーのUIDからメールアドレスを取得
           for (const userId of projectData.joinauth) {
             const userDoc = await getDoc(doc(db, "users", userId));
             if (userDoc.exists()) {
@@ -169,8 +166,8 @@ const ChatPage = () => {
             }
           }
 
-          setMembers(memberEmails); // メンバーのメールアドレスを設定
-          setChannelName(projectData.title); // チャンネル名をプロジェクトタイトルに設定
+          setMembers(memberEmails);
+          setChannelName(projectData.title);
           console.log(memberEmails);
         }
       }
@@ -210,7 +207,6 @@ const ChatPage = () => {
         <h1 className="text-3xl text-white p-5">グループチャット</h1>
         <div className="flex w-full h-5/6">
           <div className="w-3/4">
-            {/* メッセージのスタイルを自分・BOT・メンバーによって変更 */}
             <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto my-4 h-4/5">
               {messages.map((message) =>
                 auth.currentUser?.uid === message.userId ? (
@@ -283,7 +279,6 @@ const ChatPage = () => {
           </div>
 
           <div className="flex flex-col justify-evenly items-center w-1/4 mb-20">
-            {/* 募集を締め切る/再開するボタン */}
             <div
               className={`w-80 border p-3 ${
                 isRecruitmentClosed ? "bg-slate-500" : "border-blue-400"
@@ -309,7 +304,6 @@ const ChatPage = () => {
               </button>
             </div>
 
-            {/* Slackチャンネル作成ボタン */}
             <div className="w-80 border border-blue-400 p-3">
               <div className="relative w-full h-full">
                 <div className="flex justify-center items-center">
@@ -321,7 +315,6 @@ const ChatPage = () => {
               </div>
             </div>
 
-            {/* 作品を投稿するボタン */}
             <div className="w-80 border border-blue-400 p-3">
               <Link href={`/chat/submit?projectId=${projectId}`}>
                 <div className="flex justify-center items-center">
