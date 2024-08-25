@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import { auth } from "./firebaseConfig"; // Firebaseの設定ファイルをインポート
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header isLoggedIn={isLoggedIn} /> {/* ログイン状態をHeaderに渡す */}
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -83,7 +83,7 @@ const Profile = () => {
   return (
     <div
       className="bg-gray-800 flex justify-center"
-      style={{ height: "calc(100vh - 7rem)" }}
+      style={{ height: "calc(100vh - 10rem)" }}
     >
       <div className="bg-cyan-50 p-8 m-5 rounded-lg w-11/12">
         <div className="flex justify-center">
@@ -109,7 +109,7 @@ const Profile = () => {
           </div>
         )}
         <div>
-          <h1 className="mt-10 mb-4 text-3xl font-bold">プロフィール</h1>
+          {/* <h1 className="mt-10 mb-4 text-3xl font-bold">プロフィール</h1> */}
           <div className="mb-4">
             <label className="block text-sm font-medium">アカウント名</label>
             {isEditing ? (

@@ -57,9 +57,9 @@ const ProjectCreate = () => {
     <form
       onSubmit={handleSubmit}
       className="bg-gray-800 p-4"
-      style={{ height: "calc(100vh - 7rem)" }}
+      style={{ height: "calc(100vh - 10rem)" }}
     >
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
         <input
           value={title}
@@ -68,7 +68,7 @@ const ProjectCreate = () => {
           className="border rounded-lg h-10 w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">開発内容</label>
         <textarea
           value={description}
@@ -78,7 +78,7 @@ const ProjectCreate = () => {
           className="border rounded-lg w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">開発言語</label>
         <input
           value={language}
@@ -87,7 +87,7 @@ const ProjectCreate = () => {
           className="border rounded-lg w-1/2"
         />
       </div>
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">開発人数</label>
         <select
           value={teamSize}
@@ -102,7 +102,7 @@ const ProjectCreate = () => {
           <option value="6">6人</option>
         </select>
       </div>
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">開発期間</label>
         <input
           value={duration}
