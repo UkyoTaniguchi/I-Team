@@ -5,7 +5,7 @@ import { db, auth } from "../../firebaseConfig";
 import { collection, getDocs, doc, query, orderBy } from "firebase/firestore";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; //インポート
 
 const Pastwork = () => {
   const [projects, setProjects] = useState<any[]>([]); //プロジェクト配列定義
