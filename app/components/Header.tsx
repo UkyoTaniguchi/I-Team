@@ -129,7 +129,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   </Link>
                 </li>
 
-                <li className="ml-60">
+                <li className="ml-52 mr-1">
                   <p
                     onClick={togglePopup}
                     className="text-cyan-50 cursor-pointer hover:underline user-email"
