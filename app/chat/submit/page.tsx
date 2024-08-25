@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { db } from "../../firebaseConfig";
 import { getDoc, doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import exp from "constants";
 
 const Submit = () => {
   const [title, setTitle] = useState("");
@@ -53,12 +54,16 @@ const Submit = () => {
   ) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const storageRef = ref(storage, `images/${projectId}/${file.name}`);
+      const storageRef = ref(storage, `images/${projectId}/${file.name}`); // Storage に保存するパスを指定
 
       try {
+        // Firebase Storage に画像をアップロード
         await uploadBytes(storageRef, file);
+
+        // アップロードした画像のダウンロード URL を取得
         const downloadURL = await getDownloadURL(storageRef);
 
+        // ダウンロード URL を状態に保存
         setSelectedImages((prevImages) => {
           const newImages = [...prevImages];
           newImages[index] = downloadURL;
@@ -104,7 +109,8 @@ const Submit = () => {
   };
 
   return (
-    <div className="flex bg-gray-800 w-full min-h-screen justify-center p-10">
+    <Suspense>
+      <div className="flex bg-gray-800 w-full min-h-screen justify-center p-10">
       <div className="w-11/12 h-full">
         <div className="flex justify-center my-12">
           <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
@@ -130,6 +136,7 @@ const Submit = () => {
           <input
             value={link}
             onChange={(e) => setLink(e.target.value)}
+            required
             placeholder="GitHubなどのプロジェクトに関連するURLを添付（任意）"
             className="border rounded-lg h-10 w-1/2"
           />
@@ -202,60 +209,103 @@ const Submit = () => {
             <h1 className="text-cyan-50 text-5xl font-bold">作品の概要</h1>
           </div>
         </div>
-        <div className="flex justify-evenly">
-          <div className="flex relative w-1/3 h-96 border justify-center items-center">
-            {selectedImages[0] ? (
-              <img
-                src={selectedImages[0]}
-                alt="Selected1"
-                className="object-cover w-full h-full"
+        <div className="w-full h-screen">
+          <div className="flex justify-center">
+            <div className="w-11/12 p-2 mb-4">
+              <label className="text-cyan-50 text-xl mr-3">説明</label>
+              <input
+                value={explain[0]}
+                onChange={(e) => {
+                  const newExplain = [...explain];
+                  newExplain[0] = e.target.value;
+                  setExplain(newExplain);
+                }}
+                required
+                placeholder="アプリの写真の説明情報"
+                className="border rounded-lg h-10 w-1/2"
               />
-            ) : (
-              <div className="h-20">
-                <p className="text-cyan-50 text-center text-2xl">
-                  ここに画像が表示されます
-                </p>
-              </div>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, 0)}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
+            </div>
           </div>
-          <div className="flex relative w-1/3 h-96 border justify-center items-center">
-            {selectedImages[1] ? (
-              <img
-                src={selectedImages[1]}
-                alt="Selected2"
-                className="object-cover w-full h-full"
+          <div className="flex justify-center h-5/6">
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
+              {selectedImages[0] ? (
+                <Image
+                  src={selectedImages[0]}
+                  alt="selected1"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
+                />
+              ) : (
+                <div className="h-20">
+                  <p className="text-cyan-50 text-center text-2xl">
+                    ここに画像が表示されます
+                  </p>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, 0)} // 最初の画像を選択
+                className="absolute inset-0 opacity-0 cursor-pointer"
               />
-            ) : (
-              <div className="h-20">
-                <p className="text-cyan-50 text-center text-2xl">
-                  ここに画像が表示されます
-                </p>
-              </div>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, 1)}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
+            </div>
           </div>
         </div>
-        <div className="flex justify-center mt-14">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 text-cyan-50 h-14 text-xl p-3 rounded-lg hover:bg-blue-600"
-          >
-            投稿する
-          </button>
+        <div className="w-full h-screen">
+          <div className="flex justify-center">
+            <div className="w-11/12 p-2 mb-4">
+              <label className="text-cyan-50 text-xl mr-3">説明</label>
+              <input
+                value={explain[1]}
+                onChange={(e) => {
+                  const newExplain = [...explain];
+                  newExplain[1] = e.target.value;
+                  setExplain(newExplain);
+                }}
+                required
+                placeholder="アプリの写真の説明情報"
+                className="border rounded-lg h-10 w-1/2"
+              />
+            </div>
+          </div>
+          <div className="flex justify-center h-5/6">
+            <div className="flex relative w-11/12 h-5/6 border justify-center items-center">
+              {selectedImages[1] ? (
+                <Image
+                  src={selectedImages[1]}
+                  alt="selected2"
+                  fill
+                  style={{objectFit:"cover"}}
+                  className="w-full h-full"
+                />
+              ) : (
+                <div className="h-20">
+                  <p className="text-cyan-50 text-center text-2xl">
+                    ここに画像が表示されます
+                  </p>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, 1)} // 2番目の画像を選択
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-500 text-cyan-50 h-14 text-xl p-3 rounded-lg hover:bg-blue-600"
+            >
+              投稿する
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    </Suspense>  
   );
 };
 
