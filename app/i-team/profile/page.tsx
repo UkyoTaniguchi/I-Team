@@ -81,7 +81,10 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-gray-800 min-h-screen flex justify-center">
+    <div
+      className="bg-gray-800 flex justify-center"
+      style={{ height: "calc(100vh - 7rem)" }}
+    >
       <div className="bg-cyan-50 p-8 m-5 rounded-lg w-11/12">
         <div className="flex justify-center">
           {profileImage ? (

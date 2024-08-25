@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-800">
       <div className="text-cyan-50 p-4">
-        <h1 className="text-4xl font-bold mb-8 ml-32">プロジェクト一覧</h1>
+        <h1 className="text-4xl font-bold mb-8 ml-32">募集中のチーム一覧</h1>
         {projects.map((project) => (
           <div key={project.id} className="flex justify-center">
             {" "}
@@ -53,9 +53,9 @@ const Home = () => {
                         </div>
                       )}
                     </div>
-                    <div className="text-center">
+                    {/* <div className="text-center">
                       <p>募集者</p>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="w-4/5 p-3 mt-3 rounded-lg">
                     <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
