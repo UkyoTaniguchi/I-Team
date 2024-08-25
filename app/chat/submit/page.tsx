@@ -204,7 +204,7 @@ const Submit = () => {
         </div>
         <div className="w-full h-screen">
           <div className="flex justify-center">
-            <div className="w-10/12 p-2 mb-4">
+            <div className="w-11/12 p-2 mb-4">
               <label className="text-cyan-50 text-xl mr-3">説明</label>
               <input
                 value={explain[0]}
