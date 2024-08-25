@@ -3,10 +3,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { auth, db } from "../../firebaseConfig";  // Firestoreもインポート
+import { auth, db } from "../../firebaseConfig"; // Firestoreもインポート
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { doc, setDoc } from "firebase/firestore";  // Firestoreの関数をインポート
+import { doc, setDoc } from "firebase/firestore"; // Firestoreの関数をインポート
 
 type Inputs = {
   email: string;
@@ -59,7 +59,10 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-gray-800 h-screen flex flex-col items-center justify-center">
+    <div
+      className="bg-gray-800 flex flex-col items-center justify-center"
+      style={{ height: "calc(100vh - 10rem)" }}
+    >
       <form
         onSubmit={handleSubmit(onsubmit)}
         className="bg-sky-800 p-8 rounded-lg shadow-lg w-4/6"
@@ -67,14 +70,20 @@ const Register = () => {
         <h1 className="text-cyan-50 mb-4 text-4xl font-bold">新規登録</h1>
 
         <div className="mb-4">
-          <label className="text-cyan-50 block text-xl font-medium">アカウント名</label>
+          <label className="text-cyan-50 block text-xl font-medium">
+            アカウント名
+          </label>
           <input
-            {...register("accountName", { required: "アカウント名は必須です．" })}
+            {...register("accountName", {
+              required: "アカウント名は必須です．",
+            })}
             type="text"
             className="mt-1 border-2 rounded-md w-full p-2"
           />
           {errors.accountName && (
-            <span className="text-red-600 text-sm">{errors.accountName.message}</span>
+            <span className="text-red-600 text-sm">
+              {errors.accountName.message}
+            </span>
           )}
         </div>
 
@@ -107,24 +116,34 @@ const Register = () => {
             </label>
           </div>
           {errors.gender && (
-            <span className="text-red-600 text-sm">{errors.gender.message}</span>
+            <span className="text-red-600 text-sm">
+              {errors.gender.message}
+            </span>
           )}
         </div>
 
         <div className="mb-4">
-          <label className="text-cyan-50 block text-xl font-medium">経験言語</label>
+          <label className="text-cyan-50 block text-xl font-medium">
+            経験言語
+          </label>
           <input
-            {...register("experienceLanguage", { required: "経験言語は必須です．" })}
+            {...register("experienceLanguage", {
+              required: "経験言語は必須です．",
+            })}
             type="text"
             className="mt-1 border-2 rounded-md w-full p-2"
           />
           {errors.experienceLanguage && (
-            <span className="text-red-600 text-sm">{errors.experienceLanguage.message}</span>
+            <span className="text-red-600 text-sm">
+              {errors.experienceLanguage.message}
+            </span>
           )}
         </div>
 
         <div className="mb-4">
-          <label className="text-cyan-50 block text-xl font-medium">メールアドレス</label>
+          <label className="text-cyan-50 block text-xl font-medium">
+            メールアドレス
+          </label>
           <input
             {...register("email", {
               required: "メールアドレスは必須です．",
@@ -143,7 +162,9 @@ const Register = () => {
         </div>
 
         <div className="mb-4">
-          <label className="text-cyan-50 block text-xl font-medium">パスワード</label>
+          <label className="text-cyan-50 block text-xl font-medium">
+            パスワード
+          </label>
           <input
             {...register("password", {
               required: "パスワードは必須です．",
@@ -170,7 +191,7 @@ const Register = () => {
             新規登録
           </button>
         </div>
-        
+
         <div className="mt-4">
           <span className="text-cyan-50 text-sm">
             既にアカウントをお持ちですか？

@@ -36,14 +36,19 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-800 h-screen flex flex-col items-center justify-center">
+    <div
+      className="bg-gray-800 flex flex-col items-center justify-center"
+      style={{ height: "calc(100vh - 10rem)" }}
+    >
       <form
         onSubmit={handleSubmit(onsubmit)}
         className="bg-sky-800 p-8 rounded-lg shadow-lg w-1/3"
       >
         <h1 className="text-cyan-50 mb-4 text-3xl font-bold">ログイン</h1>
         <div className="mb-4">
-          <label className=" text-cyan-50 block text-xl font-medium">メールアドレス</label>
+          <label className=" text-cyan-50 block text-xl font-medium">
+            メールアドレス
+          </label>
           <input
             {...register("email", {
               required: "メールアドレスは必須です．",
@@ -61,7 +66,9 @@ const Login = () => {
           )}
         </div>
         <div className="mb-4">
-          <label className="text-cyan-50 block text-xl font-medium">パスワード</label>
+          <label className="text-cyan-50 block text-xl font-medium">
+            パスワード
+          </label>
           <input
             {...register("password", {
               required: "パスワードは必須です．",
@@ -88,9 +95,7 @@ const Login = () => {
           </button>
         </div>
         <div className="mt-4">
-          <span className="text-cyan-50 text-sm">
-            初めてご利用の方ですか？
-          </span>
+          <span className="text-cyan-50 text-sm">初めてご利用の方ですか？</span>
           <Link
             href="/auth/register"
             className="text-orange-500 text-sm font-bold hover:text-orange-400"

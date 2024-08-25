@@ -204,7 +204,7 @@ const ChatPage = () => {
   return (
     <div
       className=" bg-gray-800 py-4 px-8"
-      style={{ height: "calc(100vh - 7rem)" }}
+      style={{ height: "calc(100vh - 10rem)" }}
     >
       <h1 className="text-3xl text-white p-5">グループチャット</h1>
       <div className="flex w-full h-5/6">
