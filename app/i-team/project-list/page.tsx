@@ -78,7 +78,14 @@ const Myproject = () => {
                   </div>
                 </div>
               )}
-              {project.joinauth &&
+          </div>
+        ))}
+        <h1 className="text-4xl font-bold mb-8 ml-32">過去の参加プロジェクト</h1>
+        {projects.map((project) => (
+          <div key={project.id} className="flex justify-center">
+            {" "}
+            {/* 各要素を一意にするためにkeyを追加 */}
+            {project.joinauth &&
               project.joinauth.includes(auth.currentUser?.uid) && project.end && (
                 <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
