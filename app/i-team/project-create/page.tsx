@@ -60,7 +60,7 @@ const ProjectCreate = () => {
     <form
       onSubmit={handleSubmit}
       className="bg-gray-800 p-4"
-      style={{ height: "calc(100vh - 10rem)" }}
+      style={{ height: "calc(100vh - 10rem)"}}
     >
       <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
@@ -68,6 +68,7 @@ const ProjectCreate = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          placeholder="タイトルを入力"
           className="border rounded-lg h-10 w-1/2"
         />
       </div>
@@ -77,6 +78,7 @@ const ProjectCreate = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+          placeholder="開発内容を入力してメンバーを集めよう"
           rows={5}
           className="border rounded-lg w-1/2"
         />
@@ -87,6 +89,7 @@ const ProjectCreate = () => {
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           required
+          placeholder="python, JavaScriptなどの触ったことがある技術"
           className="border rounded-lg w-1/2"
         />
       </div>
@@ -112,6 +115,7 @@ const ProjectCreate = () => {
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             required
+            placeholder="現段階での開発予定日数"
             className="border rounded-lg w-1/2"
           />
         </div>
@@ -121,6 +125,7 @@ const ProjectCreate = () => {
             value={others}
             onChange={(e) => setothers(e.target.value)}
             required
+            placeholder="自分の思いを伝えよう！"
             rows={5}
             className="border rounded-lg w-1/2"
           />
