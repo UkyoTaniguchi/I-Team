@@ -109,7 +109,7 @@ const Submit = () => {
   };
 
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <div className="flex bg-gray-800 w-full min-h-screen justify-center p-10">
       <div className="w-11/12 h-full">
         <div className="flex justify-center my-12">
