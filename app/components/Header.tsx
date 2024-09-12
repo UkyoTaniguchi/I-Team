@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
               alt="I-Team logo"
               width={100}
               height={100}
-              className="my-2 rounded-full"
+              className="rounded-full"
             />
           </Link>
         </div>
@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     href="/i-team/project-create"
                     className="text-cyan-50 hover:underline"
                   >
-                    新たなチームを作成
+                    チームを作る
                   </Link>
                 </li>
                 <li>

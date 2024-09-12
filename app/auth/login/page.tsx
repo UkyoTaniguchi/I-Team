@@ -42,7 +42,7 @@ const Login = () => {
     >
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-sky-800 p-8 rounded-lg shadow-lg w-1/3"
+        className="bg-[#135389] w-96 px-10 py-8 rounded-lg shadow-lg"
       >
         <h1 className="text-cyan-50 mb-4 text-3xl font-bold">ログイン</h1>
         <div className="mb-4">
