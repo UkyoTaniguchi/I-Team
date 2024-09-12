@@ -65,7 +65,7 @@ const Register = () => {
     >
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-sky-800 p-8 rounded-lg shadow-lg w-4/6"
+        className="bg-[#135389] p-8 rounded-lg shadow-lg w-4/6"
       >
         <h1 className="text-cyan-50 mb-4 text-4xl font-bold">新規登録</h1>
 
@@ -186,7 +186,7 @@ const Register = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+            className="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-500"
           >
             新規登録
           </button>
