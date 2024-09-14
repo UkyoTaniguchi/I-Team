@@ -6,6 +6,10 @@ import Link from "next/link";
 import { auth } from "../firebaseConfig";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
+import { FaSearch } from "react-icons/fa";
+import { IoIosCreate } from "react-icons/io";
+import { MdJoinInner } from "react-icons/md";
+import { BsFileEarmarkPost } from "react-icons/bs";
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -74,7 +78,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
           </Link>
         </div>
         <nav>
-          <ul className="flex gap-10 text-xl">
+          <ul className="flex gap-5 text-xl">
             {!isLoggedIn ? (
               <>
                 <li>
@@ -96,43 +100,67 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
               </>
             ) : (
               <>
-                <li>
+                <li className="flex items-center">
                   <Link
                     href="/i-team/home"
-                    className="text-cyan-50 hover:underline"
+                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
                   >
                     チームを探す
                   </Link>
+                  <Link
+                    href="/i-team/home"
+                    className="text-cyan-50 hover:underline lg:hidden"
+                  >
+                    <FaSearch className="size-10"/>
+                  </Link>
                 </li>
-                <li>
+                <li className="flex items-center">
                   <Link
                     href="/i-team/project-create"
-                    className="text-cyan-50 hover:underline"
+                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
                   >
                     チームを作る
                   </Link>
+                  <Link
+                    href="/i-team/project-create"
+                    className="text-cyan-50 hover:underline lg:hidden"
+                  >
+                    <IoIosCreate className="size-10"/>
+                  </Link>
                 </li>
-                <li>
+                <li className="flex items-center">
                   <Link
                     href="/i-team/project-list"
-                    className="text-cyan-50 hover:underline"
+                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
                   >
                     参加中のチーム
                   </Link>
+                  <Link
+                    href="/i-team/project-list"
+                    className="text-cyan-50 hover:underline lg:hidden"
+                  >
+                    <MdJoinInner className="size-10"/>
+                  </Link>
                 </li>
-                <li>
+                <li className="flex items-center">
                   <Link
                     href="/i-team/past-work"
-                    className="text-cyan-50 hover:underline"
+                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
                   >
                     みんなの制作物
                   </Link>
+                  <Link
+                    href="/i-team/past-work"
+                    className="text-cyan-50 hover:underline lg:hidden"
+                  >
+                    <BsFileEarmarkPost className="size-10"/>
+                  </Link>
                 </li>
 
-                <li className="ml-52 mr-1">
+                <li className="flex items-center mr-1">
                   <p
                     onClick={togglePopup}
-                    className="text-cyan-50 cursor-pointer hover:underline user-email"
+                    className="text-cyan-50 cursor-pointer hover:underline user-email text-xs sm:text-base"
                   >
                     {userEmail}
                   </p>
