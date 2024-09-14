@@ -35,10 +35,10 @@ const Home = () => {
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth.length < project.teamSize && (
-              <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+              <div className="bg-sky-900 w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                 <div className="flex w-full">
                   <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                    <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
+                    <div className="flex relative bg-white w-24 h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                       {project.creatorProfileImage ? (
                         <Image
                           src={project.creatorProfileImage}
