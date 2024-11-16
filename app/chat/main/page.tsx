@@ -4,11 +4,11 @@ import React, { Suspense } from "react";
 import ChatPage from "@/app/components/chat";
 
 const Chat = () => {
-  return(
+  return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ChatPage/>
+      <ChatPage />
     </Suspense>
-  )
+  );
 };
 
 export default Chat;

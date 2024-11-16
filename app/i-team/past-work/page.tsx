@@ -64,10 +64,13 @@ const Pastwork = () => {
 
   return (
     <div className="min-h-screen bg-gray-800">
-      <div className="text-cyan-50 p-4">
-        <h1 className="text-4xl font-bold w-5/6 mb-8 ml-32 p-3 border-b">
-          みんなの制作物一覧
-        </h1>
+      <div className="flex flex-col items-center text-cyan-50 p-4">
+        <div className="w-[90%] px-2">
+          <h1 className="text-2xl sm:text-4xl font-bold w-full mb-8 p-3 border-b">
+            みんなの制作物一覧
+          </h1>
+        </div>
+
         <div className="flex flex-wrap justify-center gap-4">
           {projects.map(
             (project) =>

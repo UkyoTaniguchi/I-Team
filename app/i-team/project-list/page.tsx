@@ -28,19 +28,26 @@ const Myproject = () => {
 
   return (
     <div className="min-h-screen bg-gray-800">
-      <div className="text-cyan-50 p-4">
-        <h1 className="text-4xl font-bold mb-8 ml-32">参加中のチーム一覧</h1>
+      <div className="flex flex-col items-center text-cyan-50 p-4">
+        <div className="w-full sm:w-[90%]">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3">
+            参加中のチーム一覧
+          </h1>
+        </div>
         {projects.map((project) => (
-          <div key={project.id} className="flex justify-center">
+          <div
+            key={project.id}
+            className="flex justify-center w-full sm:w-[90%] mb-5"
+          >
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
               project.joinauth.includes(auth.currentUser?.uid) &&
               !project.end && (
-                <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+                <div className="bg-sky-900 w-full border border-gray-700 rounded-2xl p-1 mb-4">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                      <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
+                      <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                         {project.creatorProfileImage ? (
                           <Image
                             src={project.creatorProfileImage}
@@ -63,29 +70,47 @@ const Myproject = () => {
                       <h2 className="text-2xl font-bold mb-3">
                         {project.title}
                       </h2>
-                      <p className="text-orange-600 font-bold">
-                        開発内容:{" "}
-                        <span className="text-white">
-                          {project.description}
-                        </span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発技術:{" "}
-                        <span className="text-white">{project.language}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発人数:{" "}
-                        <span className="text-white">{project.teamSize}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発期間:{" "}
-                        <span className="text-white">{project.duration}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        そのほか:{" "}
-                        <span className="text-white">{project.others}</span>
-                      </p>
-                      <div className="flex justify-center">
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発内容：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発技術：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.language}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発人数：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.teamSize}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発期間：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.duration}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>そのほか：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.others}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-center pt-3">
                         <Link
                           href={`/chat/main?projectId=${project.id}`}
                           className="bg-blue-600 rounded p-2 hover:bg-blue-700"
@@ -99,11 +124,13 @@ const Myproject = () => {
               )}
           </div>
         ))}
-        <h1 className="text-4xl font-bold mb-8 ml-32">
-          過去の参加プロジェクト
-        </h1>
+        <div className="w-full sm:w-[90%]">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3">
+            過去の参加プロジェクト
+          </h1>
+        </div>
         {projects.map((project) => (
-          <div key={project.id} className="flex justify-center">
+          <div key={project.id} className="flex justify-center w-[90%]">
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
@@ -135,29 +162,47 @@ const Myproject = () => {
                       <h2 className="text-2xl font-bold mb-3">
                         {project.title}
                       </h2>
-                      <p className="text-orange-600 font-bold">
-                        開発内容:{" "}
-                        <span className="text-white">
-                          {project.description}
-                        </span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発技術:{" "}
-                        <span className="text-white">{project.language}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発人数:{" "}
-                        <span className="text-white">{project.teamSize}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        開発期間:{" "}
-                        <span className="text-white">{project.duration}</span>
-                      </p>
-                      <p className="text-orange-600 font-bold">
-                        そのほか:{" "}
-                        <span className="text-white">{project.others}</span>
-                      </p>
-                      <div className="flex justify-center">
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発内容：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発技術：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.language}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発人数：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.teamSize}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>開発期間：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.duration}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-shrink-0 text-orange-600 font-bold">
+                          <p>そのほか：</p>
+                        </div>
+                        <div className="text-white">
+                          <p> {project.others}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-center pt-3">
                         <Link
                           href={`/chat/main?projectId=${project.id}`}
                           className="bg-blue-600 rounded p-2 hover:bg-blue-700"
