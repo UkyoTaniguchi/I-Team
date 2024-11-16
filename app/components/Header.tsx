@@ -10,6 +10,16 @@ import { FaSearch } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { MdJoinInner } from "react-icons/md";
 import { BsFileEarmarkPost } from "react-icons/bs";
+import { FiAlignJustify } from "react-icons/fi";
+import { Description } from "@radix-ui/react-dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -19,6 +29,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -37,6 +48,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
     }
+  };
+
+  const handleLinkClick = (href: string) => {
+    router.push(href);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -64,9 +80,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   };
 
   return (
-    <div className="flex w-full h-28">
+    <div className="flex w-full h-28 bg-gray-800">
       <div className="flex items-center bg-gray-800 w-full">
-        <div className="flex mx-10 items-center justify-center">
+        <div className="flex mx-2 sm:mx-10 items-center justify-center">
           <Link href={isLoggedIn ? "/i-team/top" : "/"}>
             <Image
               src="/logo.png"
@@ -77,8 +93,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
             />
           </Link>
         </div>
-        <nav>
-          <ul className="flex gap-5 text-xl">
+        <nav className="hidden lg:block">
+          <ul className="flex gap-5 text-base">
             {!isLoggedIn ? (
               <>
                 <li>
@@ -103,60 +119,35 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                 <li className="flex items-center">
                   <Link
                     href="/i-team/home"
-                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
+                    className="text-cyan-50 hover:underline"
                   >
                     チームを探す
                   </Link>
-                  <Link
-                    href="/i-team/home"
-                    className="text-cyan-50 hover:underline lg:hidden"
-                  >
-                    <FaSearch className="size-10"/>
-                  </Link>
                 </li>
                 <li className="flex items-center">
                   <Link
                     href="/i-team/project-create"
-                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
+                    className="text-cyan-50 hover:underline"
                   >
                     チームを作る
                   </Link>
-                  <Link
-                    href="/i-team/project-create"
-                    className="text-cyan-50 hover:underline lg:hidden"
-                  >
-                    <IoIosCreate className="size-10"/>
-                  </Link>
                 </li>
                 <li className="flex items-center">
                   <Link
                     href="/i-team/project-list"
-                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
+                    className="text-cyan-50 hover:underline"
                   >
                     参加中のチーム
                   </Link>
-                  <Link
-                    href="/i-team/project-list"
-                    className="text-cyan-50 hover:underline lg:hidden"
-                  >
-                    <MdJoinInner className="size-10"/>
-                  </Link>
                 </li>
                 <li className="flex items-center">
                   <Link
                     href="/i-team/past-work"
-                    className="text-cyan-50 hover:underline hidden lg:text-base lg:block"
+                    className="text-cyan-50 hover:underline"
                   >
                     みんなの制作物
                   </Link>
-                  <Link
-                    href="/i-team/past-work"
-                    className="text-cyan-50 hover:underline lg:hidden"
-                  >
-                    <BsFileEarmarkPost className="size-10"/>
-                  </Link>
                 </li>
-
                 <li className="flex items-center mr-1">
                   <p
                     onClick={togglePopup}
@@ -185,6 +176,78 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
             )}
           </ul>
         </nav>
+      </div>
+      <div className="lg:hidden flex flex-grow justify-end mr-5 bg-gray-800">
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger>
+            <FiAlignJustify className="h-10 w-10 text-white" />
+          </SheetTrigger>
+          {isLoggedIn && (
+            <SheetContent className="px-0 pt-10">
+              <SheetHeader className="mb-3">
+                <SheetTitle className="text-center">{userEmail}</SheetTitle>
+                <Description></Description>
+              </SheetHeader>
+              <div className="flex flex-col w-full text-center">
+                <button
+                  onClick={() => handleLinkClick("/i-team/profile")}
+                  className="border-y py-5"
+                >
+                  プロフィール
+                </button>
+                <button
+                  onClick={() => handleLinkClick("/i-team/home")}
+                  className="border-b py-5"
+                >
+                  チームを探す
+                </button>
+                <button
+                  onClick={() => handleLinkClick("/i-team/project-create")}
+                  className="border-b py-5"
+                >
+                  チームを作る
+                </button>
+                <button
+                  onClick={() => handleLinkClick("/i-team/project-list")}
+                  className="border-b py-5"
+                >
+                  参加中のチーム
+                </button>
+                <button
+                  onClick={() => handleLinkClick("/i-team/past-work")}
+                  className="border-b py-5"
+                >
+                  みんなの制作物
+                </button>
+                <button onClick={handleLogout} className="border-b py-5">
+                  ログアウト
+                </button>
+              </div>
+            </SheetContent>
+          )}
+          {!isLoggedIn && (
+            <SheetContent className="px-0 pt-10">
+              <SheetHeader className="mb-3">
+                <SheetTitle className="text-center">Not logged in</SheetTitle>
+                <Description></Description>
+              </SheetHeader>
+              <div className="flex flex-col w-full text-center">
+                <button
+                  onClick={() => handleLinkClick("/auth/register")}
+                  className="border-y py-5"
+                >
+                  新規登録
+                </button>
+                <button
+                  onClick={() => handleLinkClick("/auth/login")}
+                  className="border-b py-5"
+                >
+                  ログイン
+                </button>
+              </div>
+            </SheetContent>
+          )}
+        </Sheet>
       </div>
     </div>
   );
