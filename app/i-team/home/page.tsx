@@ -30,89 +30,94 @@ const Home = () => {
     <div className="min-h-screen bg-gray-800">
       <div className="text-cyan-50 p-4">
         <h1 className="text-4xl font-bold mb-8 ml-32">募集中のチーム一覧</h1>
-        {projects.map((project) => (
-          <div key={project.id} className="flex justify-center">
-            {" "}
-            {/* 各要素を一意にするためにkeyを追加 */}
-            {project.joinauth.length < project.teamSize && (
-              <div className="bg-sky-900 w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
-                <div className="flex w-full">
-                  <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                    <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
-                      {project.creatorProfileImage ? (
-                        <Image
-                          src={project.creatorProfileImage}
-                          alt="Creator Profile Image"
-                          fill
-                          style={{ objectFit: "cover" }}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <div className="flex w-16 h-16 text-black items-center justify-center text-center">
-                          No Image
+        {projects.map(
+          (project) =>
+            !project.recruitment && (
+              <div key={project.id} className="flex justify-center">
+                {" "}
+                {/* 各要素を一意にするためにkeyを追加 */}
+                {project.joinauth.length < project.teamSize && (
+                  <div className="bg-sky-900 w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+                    <div className="flex w-full">
+                      <div className="w-1/5 py-3 flex flex-col justify-center items-center">
+                        <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
+                          {project.creatorProfileImage ? (
+                            <Image
+                              src={project.creatorProfileImage}
+                              alt="Creator Profile Image"
+                              fill
+                              style={{ objectFit: "cover" }}
+                              className="rounded-full"
+                            />
+                          ) : (
+                            <div className="flex w-16 h-16 text-black items-center justify-center text-center">
+                              No Image
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div className="text-center">
-                      <p>募集者</p>
+                        <div className="text-center">
+                          <p>募集者</p>
+                        </div>
+                      </div>
+                      <div className="w-4/5 p-3 mt-3 rounded-lg">
+                        <h2 className="text-2xl font-bold mb-3">
+                          {project.title}
+                        </h2>
+                        <div className="flex">
+                          <div className="flex-shrink-0 text-orange-600 font-bold">
+                            <p>開発内容：</p>
+                          </div>
+                          <div className="text-white">
+                            <p> {project.description}</p>
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="flex-shrink-0 text-orange-600 font-bold">
+                            <p>開発技術：</p>
+                          </div>
+                          <div className="text-white">
+                            <p> {project.language}</p>
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="flex-shrink-0 text-orange-600 font-bold">
+                            <p>開発人数：</p>
+                          </div>
+                          <div className="text-white">
+                            <p> {project.teamSize}</p>
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="flex-shrink-0 text-orange-600 font-bold">
+                            <p>開発期間：</p>
+                          </div>
+                          <div className="text-white">
+                            <p> {project.duration}</p>
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="flex-shrink-0 text-orange-600 font-bold">
+                            <p>そのほか：</p>
+                          </div>
+                          <div className="text-white">
+                            <p> {project.others}</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-center pt-3">
+                          <Link
+                            href={`/chat/main?projectId=${project.id}`}
+                            className="bg-blue-600 rounded p-2 hover:bg-blue-700"
+                          >
+                            参加する
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="w-4/5 p-3 mt-3 rounded-lg">
-                    <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
-                    <div className="flex">
-                      <div className="flex-shrink-0 text-orange-600 font-bold">
-                        <p>開発内容：</p>
-                      </div>
-                      <div className="text-white">
-                        <p> {project.description}</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex-shrink-0 text-orange-600 font-bold">
-                        <p>開発技術：</p>
-                      </div>
-                      <div className="text-white">
-                        <p> {project.language}</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex-shrink-0 text-orange-600 font-bold">
-                        <p>開発人数：</p>
-                      </div>
-                      <div className="text-white">
-                        <p> {project.teamSize}</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex-shrink-0 text-orange-600 font-bold">
-                        <p>開発期間：</p>
-                      </div>
-                      <div className="text-white">
-                        <p> {project.duration}</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="flex-shrink-0 text-orange-600 font-bold">
-                        <p>そのほか：</p>
-                      </div>
-                      <div className="text-white">
-                        <p> {project.others}</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-center pt-3">
-                      <Link
-                        href={`/chat/main?projectId=${project.id}`}
-                        className="bg-blue-600 rounded p-2 hover:bg-blue-700"
-                      >
-                        参加する
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            )
+        )}
       </div>
     </div>
   );
