@@ -38,7 +38,7 @@ const Home = () => {
               <div className="bg-sky-900 w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
                 <div className="flex w-full">
                   <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                    <div className="flex relative bg-white w-24 h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
+                    <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                       {project.creatorProfileImage ? (
                         <Image
                           src={project.creatorProfileImage}
@@ -53,33 +53,53 @@ const Home = () => {
                         </div>
                       )}
                     </div>
-                    {/* <div className="text-center">
+                    <div className="text-center">
                       <p>募集者</p>
-                    </div> */}
+                    </div>
                   </div>
                   <div className="w-4/5 p-3 mt-3 rounded-lg">
                     <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
-                    <p className="text-orange-600 font-bold">
-                      開発内容:{" "}
-                      <span className="text-white">{project.description}</span>
-                    </p>
-                    <p className="text-orange-600 font-bold">
-                      開発技術:{" "}
-                      <span className="text-white">{project.language}</span>
-                    </p>
-                    <p className="text-orange-600 font-bold">
-                      開発人数:{" "}
-                      <span className="text-white">{project.teamSize}</span>
-                    </p>
-                    <p className="text-orange-600 font-bold">
-                      開発期間:{" "}
-                      <span className="text-white">{project.duration}</span>
-                    </p>
-                    <p className="text-orange-600 font-bold">
-                      そのほか:{" "}
-                      <span className="text-white">{project.others}</span>
-                    </p>
-                    <div className="flex justify-center">
+                    <div className="flex">
+                      <div className="flex-shrink-0 text-orange-600 font-bold">
+                        <p>開発内容：</p>
+                      </div>
+                      <div className="text-white">
+                        <p> {project.description}</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="flex-shrink-0 text-orange-600 font-bold">
+                        <p>開発技術：</p>
+                      </div>
+                      <div className="text-white">
+                        <p> {project.language}</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="flex-shrink-0 text-orange-600 font-bold">
+                        <p>開発人数：</p>
+                      </div>
+                      <div className="text-white">
+                        <p> {project.teamSize}</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="flex-shrink-0 text-orange-600 font-bold">
+                        <p>開発期間：</p>
+                      </div>
+                      <div className="text-white">
+                        <p> {project.duration}</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="flex-shrink-0 text-orange-600 font-bold">
+                        <p>そのほか：</p>
+                      </div>
+                      <div className="text-white">
+                        <p> {project.others}</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-center pt-3">
                       <Link
                         href={`/chat/main?projectId=${project.id}`}
                         className="bg-blue-600 rounded p-2 hover:bg-blue-700"
