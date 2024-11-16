@@ -15,6 +15,8 @@ import {
   getDoc,
   runTransaction,
   Firestore,
+  updateDoc,
+  setDoc,
 } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { User, onAuthStateChanged } from "firebase/auth";
@@ -79,15 +81,29 @@ const ChatPage = () => {
   }>({});
   const [members, setMembers] = useState<string[]>([]);
   const [channelName, setChannelName] = useState<string>("");
-  const [isRecruitmentClosed, setIsRecruitmentClosed] = useState(false);
+  const [isRecruitmentClosed, setIsRecruitmentClosed] = useState<boolean>();
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
 
   // 募集状態を切り替える関数
-  const handleToggleRecruitment = () => {
-    setIsRecruitmentClosed(!isRecruitmentClosed);
+  const handleToggleRecruitment = async () => {
+    if (!projectId) {
+      console.error("プロジェクトIDが指定されていません");
+      return;
+    }
+
+    try {
+      const projectDocRef = doc(db, "projects", projectId);
+
+      await updateDoc(projectDocRef, {
+        recruitment: !isRecruitmentClosed,
+      });
+      setIsRecruitmentClosed(!isRecruitmentClosed);
+    } catch (error) {
+      console.log("募集切り替えに失敗しました", error);
+    }
   };
 
   useEffect(() => {
@@ -168,6 +184,7 @@ const ChatPage = () => {
 
           setMembers(memberEmails);
           setChannelName(projectData.title);
+          setIsRecruitmentClosed(projectData.recruitment);
           console.log(memberEmails);
         }
       }
@@ -199,7 +216,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-160px)] flex flex-col bg-gray-800 w-full py-4 px-8">
+    <div className="min-h-[calc(100vh-160px)] flex flex-col bg-gray-800 w-full py-4 px-8">
       <div className="flex justify-evenly items-center w-full">
         <div
           className={`w-80 border p-3 ${
@@ -221,7 +238,7 @@ const ChatPage = () => {
           </button>
         </div>
 
-        <div className="w-80 border border-blue-400 p-3">
+        {/* <div className="w-80 border border-blue-400 p-3">
           <div className="relative w-full h-full">
             <div className="flex justify-center items-center">
               <CreateChannelButton
@@ -230,7 +247,7 @@ const ChatPage = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="w-80 border border-blue-400 p-3">
           <Link href={`/chat/submit?projectId=${projectId}`}>
