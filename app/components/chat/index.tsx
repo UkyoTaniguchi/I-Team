@@ -216,7 +216,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-160px)] flex flex-col bg-gray-800 w-full py-4 px-8">
+    <div className="min-h-[calc(100vh-160px)] flex flex-col w-full py-4 px-8">
       <div className="flex justify-evenly items-center w-full">
         <div
           className={`w-80 border p-3 ${
@@ -238,7 +238,7 @@ const ChatPage = () => {
           </button>
         </div>
 
-        {/* <div className="w-80 border border-blue-400 p-3">
+        <div className="w-80 border border-blue-400 p-3">
           <div className="relative w-full h-full">
             <div className="flex justify-center items-center">
               <CreateChannelButton
@@ -247,7 +247,7 @@ const ChatPage = () => {
               />
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="w-80 border border-blue-400 p-3">
           <Link href={`/chat/submit?projectId=${projectId}`}>
@@ -317,7 +317,7 @@ const ChatPage = () => {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-grow p-2 rounded-l-lg border-none"
+            className="flex-grow p-2 rounded-l-lg border-none text-black"
             placeholder="メッセージを入力..."
           />
           <button
