@@ -27,7 +27,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-[calc(100vh-160px)]">
       <div className="text-cyan-50 p-4">
         <h1 className="text-4xl font-bold mb-8 ml-32">募集中のチーム一覧</h1>
         {projects.map(

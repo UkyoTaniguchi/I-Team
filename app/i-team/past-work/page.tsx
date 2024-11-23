@@ -63,7 +63,7 @@ const Pastwork = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-[calc(100vh-160px)]">
       <div className="flex flex-col items-center text-cyan-50 p-4">
         <div className="w-[90%] px-2">
           <h1 className="text-2xl sm:text-4xl font-bold w-full mb-8 p-3 border-b">

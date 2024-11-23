@@ -31,7 +31,7 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="ja" className="bg-gray-800">
+    <html lang="ja" className="dark">
       <body className={inter.className}>
         <Header isLoggedIn={isLoggedIn} /> {/* ログイン状態をHeaderに渡す */}
         {children}

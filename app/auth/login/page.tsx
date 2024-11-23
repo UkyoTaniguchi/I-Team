@@ -24,7 +24,7 @@ const Login = () => {
   const onsubmit: SubmitHandler<Inputs> = async (data) => {
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
-        router.push("/i-team/top");
+        router.push("/i-team/home");
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
@@ -36,13 +36,10 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="bg-gray-800 flex flex-col items-center justify-center"
-      style={{ height: "calc(100vh - 10rem)" }}
-    >
+    <div className="flex flex-col min-h-[calc(100vh-160px)] items-center justify-center">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-[#135389] w-96 px-10 py-8 rounded-lg shadow-lg"
+        className="bg-[#232323] w-96 px-10 py-8 rounded-lg shadow-lg"
       >
         <h1 className="text-cyan-50 mb-4 text-3xl font-bold">ログイン</h1>
         <div className="mb-4">
@@ -59,7 +56,7 @@ const Login = () => {
               },
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.email && (
             <span className="text-red-600 text-sm">{errors.email.message}</span>
@@ -78,7 +75,7 @@ const Login = () => {
               },
             })}
             type="password"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.password && (
             <span className="text-red-600 text-sm">

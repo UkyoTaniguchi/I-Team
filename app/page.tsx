@@ -4,9 +4,58 @@ import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div>
-      <div className="flex flex-col bg-gray-800 min-h-screen p-5 w-full justify-center text-cyan-50">
-        <div className="bg-[#135389] w-full h-5/6 p-10 rounded-3xl">
+    <div className="flex justify-center w-full">
+      <div className="flex min-h-[calc(100vh-160px)] p-5 justify-center text-cyan-50">
+        <div className="flex flex-col justify-evenly border w-full rounded-2xl p-10">
+          <div className="mb-2">
+            <h1 className="text-cyan-600 text-3xl sm:text-4xl font-bold mb-5">
+              気軽なチーム開発を
+            </h1>
+            <p className="text-base sm:text-xl mb-8">
+              I-TEAMではチーム開発メンバー募集や気になる開発プロジェクトに参加することができます
+            </p>
+            <p className="text-base sm:text-xl">
+              <span className="border-b border-white text-xl sm:text-2xl">
+                I-TEAM
+              </span>{" "}
+              でできること
+            </p>
+          </div>
+          <div className="flex flex-col items-center mb-8">
+            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323]">
+              <p>作成したいアプリケーションのメンバー募集</p>
+            </div>
+            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323]">
+              <p>気になる募集プロジェクトに参加・開発</p>
+            </div>
+            <div className="rounded-xl px-10 py-3 bg-[#232323]">
+              <p>他チームの過去プロジェクトの成果物閲覧</p>
+            </div>
+          </div>
+          <div className="flex justify-center w-full">
+            <div className="w-full sm:w-[70%] p-5 bg-[#232323] rounded-xl">
+              <div className="text-center text-lg mb-5">
+                <p>さっそく始めよう</p>
+              </div>
+              <div className="flex justify-evenly">
+                <Link
+                  href="/auth/register"
+                  className="border px-5 py-3 rounded-2xl hover:bg-[#4a4a4a]"
+                >
+                  新規登録
+                </Link>
+
+                <Link
+                  href="/auth/login"
+                  className="border px-5 py-3 rounded-2xl hover:bg-[#4a4a4a]"
+                >
+                  ログイン
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="bg-[#135389] w-full p-10 rounded-3xl">
           <div>
             <h1 className="text-orange-400 text-5xl sm:text-6xl font-bold mb-5">
               気軽なチーム開発を
@@ -63,8 +112,8 @@ const HomePage = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center mt-5">
+        </div> */}
+        {/* <div className="flex justify-center mt-5">
           <h1 className="text-4xl text-center">
             このような悩みを解決できるプラットフォームが
             <span className="text-orange-400 font-bold">「I-TEAM」</span>
@@ -116,7 +165,7 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

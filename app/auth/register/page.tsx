@@ -59,13 +59,10 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="bg-gray-800 flex flex-col items-center justify-center"
-      style={{ height: "calc(100vh - 10rem)" }}
-    >
+    <div className="flex flex-col min-h-[calc(100vh-160px)] items-center justify-center">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-[#135389] p-8 rounded-lg shadow-lg w-4/6"
+        className="bg-[#232323] p-8 rounded-lg shadow-lg w-4/6"
       >
         <h1 className="text-cyan-50 mb-4 text-4xl font-bold">新規登録</h1>
 
@@ -78,7 +75,7 @@ const Register = () => {
               required: "アカウント名は必須です．",
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.accountName && (
             <span className="text-red-600 text-sm">
@@ -131,7 +128,7 @@ const Register = () => {
               required: "経験言語は必須です．",
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.experienceLanguage && (
             <span className="text-red-600 text-sm">
@@ -154,7 +151,7 @@ const Register = () => {
               },
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.email && (
             <span className="text-red-600 text-sm">{errors.email.message}</span>
@@ -174,7 +171,7 @@ const Register = () => {
               },
             })}
             type="password"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 rounded-md w-full p-2 text-black"
           />
           {errors.password && (
             <span className="text-red-600 text-sm">
