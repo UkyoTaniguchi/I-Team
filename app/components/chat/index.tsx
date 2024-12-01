@@ -21,6 +21,8 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { User, onAuthStateChanged } from "firebase/auth";
 import CreateChannelButton from "@/app/components/CreateChannelButton";
+import Modal from "../Modal";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 // メンバーをプロジェクトへ追加・システムメッセージの送信する関数
 const incrementProjectMemberCount = async (
@@ -80,8 +82,11 @@ const ChatPage = () => {
     [key: string]: string;
   }>({});
   const [members, setMembers] = useState<string[]>([]);
+  const [projects, setProjects] = useState<any | null>(null);
+  const [membersName, setMembersName] = useState<string[]>([]);
   const [channelName, setChannelName] = useState<string>("");
   const [isRecruitmentClosed, setIsRecruitmentClosed] = useState<boolean>();
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -172,17 +177,25 @@ const ChatPage = () => {
 
         if (projectDocSnap.exists()) {
           const projectData = projectDocSnap.data();
+          setProjects({
+            id: projectId,
+            ...projectData,
+          });
           const memberEmails: string[] = [];
+          const memberNames: string[] = [];
 
           for (const userId of projectData.joinauth) {
             const userDoc = await getDoc(doc(db, "users", userId));
             if (userDoc.exists()) {
               const userEmail = userDoc.data()?.email;
+              const userName = userDoc.data()?.accountName;
               if (userEmail) memberEmails.push(userEmail);
+              if (userName) memberNames.push(userName);
             }
           }
 
           setMembers(memberEmails);
+          setMembersName(memberNames);
           setChannelName(projectData.title);
           setIsRecruitmentClosed(projectData.recruitment);
           console.log(memberEmails);
@@ -216,49 +229,77 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-160px)] flex flex-col w-full py-4 px-8">
-      <div className="flex justify-evenly items-center w-full">
-        <div
-          className={`w-80 border p-3 ${
-            isRecruitmentClosed ? "bg-slate-500" : "border-blue-400"
-          }`}
-        >
-          <button onClick={handleToggleRecruitment} className="w-full h-full">
-            <div className="relative w-full h-full">
-              <div className="flex justify-center items-center">
-                <p
-                  className={`text-2xl font-extrabold hover:text-blue-200 ${
-                    isRecruitmentClosed ? "text-slate-300" : "text-blue-400"
-                  }`}
-                >
-                  {isRecruitmentClosed ? "募集を再開する" : "募集を締め切る"}
-                </p>
+    <div className="min-h-[calc(100vh-160px)] flex flex-col w-full px-8">
+      <div className="mb-6 flex justify-center">
+        {projects ? (
+          <div className="flex items-end gap-2">
+            <h2 className="text-3xl font-bold">{projects.title}</h2>
+            <button onClick={() => setIsOpenModal(true)} className="">
+              <IoMdInformationCircleOutline className="text-2xl" />
+            </button>
+            <Modal
+              isOpenModal={isOpenModal}
+              setIsOpenModal={setIsOpenModal}
+              projects={projects}
+              membersName={membersName}
+            />
+          </div>
+        ) : (
+          <p>Loading project data...</p>
+        )}
+      </div>
+      {!projects.end && (
+        <>
+          <div className="flex justify-evenly items-center w-full">
+            <div
+              className={`border p-3 ${
+                isRecruitmentClosed ? "bg-slate-500" : "border-blue-400"
+              }`}
+            >
+              <button
+                onClick={handleToggleRecruitment}
+                className="w-full h-full"
+              >
+                <div className="relative w-full h-full">
+                  <div className="flex justify-center items-center">
+                    <p
+                      className={`text-lg font-extrabold hover:text-blue-200 ${
+                        isRecruitmentClosed ? "text-slate-300" : "text-blue-400"
+                      }`}
+                    >
+                      {isRecruitmentClosed
+                        ? "募集を再開する"
+                        : "募集を締め切る"}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div className="border border-blue-400 p-3">
+              <div className="relative w-full h-full">
+                <div className="flex justify-center items-center">
+                  <CreateChannelButton
+                    members={members}
+                    channelName={channelName}
+                  />
+                </div>
               </div>
             </div>
-          </button>
-        </div>
 
-        <div className="w-80 border border-blue-400 p-3">
-          <div className="relative w-full h-full">
-            <div className="flex justify-center items-center">
-              <CreateChannelButton
-                members={members}
-                channelName={channelName}
-              />
+            <div className="border border-blue-400 p-3">
+              <Link href={`/chat/submit?projectId=${projectId}`}>
+                <div className="flex justify-center items-center">
+                  <p className="text-blue-400 text-lg font-extrabold hover:text-blue-200">
+                    作品を投稿する
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
-        </div>
+        </>
+      )}
 
-        <div className="w-80 border border-blue-400 p-3">
-          <Link href={`/chat/submit?projectId=${projectId}`}>
-            <div className="flex justify-center items-center">
-              <p className="text-blue-400 text-2xl font-extrabold hover:text-blue-200">
-                作品を投稿する
-              </p>
-            </div>
-          </Link>
-        </div>
-      </div>
       <div className="w-full">
         <div className="bg-gray-700 p-4 rounded-lg overflow-y-auto my-4 h-[480px]">
           {messages.map((message) =>
@@ -271,7 +312,7 @@ const ChatPage = () => {
             ) : (
               <div key={message.id} className="flex items-center">
                 {userProfileImages[message.userId] ? (
-                  <div className="relative w-10 h-10 rounded-full bg-white">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white">
                     <Image
                       src={userProfileImages[message.userId]}
                       alt="profile Image"
