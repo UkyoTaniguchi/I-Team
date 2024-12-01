@@ -27,9 +27,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-800">
-      <div className="text-cyan-50 p-4">
-        <h1 className="text-4xl font-bold mb-8 ml-32">募集中のチーム一覧</h1>
+    <div className="min-h-[calc(100vh-160px)]">
+      <div className="w-full text-cyan-50 p-4">
+        <div className="flex justify-center w-full">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3 md:w-[80%] w-full">
+            募集中のチーム一覧
+          </h1>
+        </div>
         {projects.map(
           (project) =>
             !project.recruitment && (
@@ -37,10 +41,10 @@ const Home = () => {
                 {" "}
                 {/* 各要素を一意にするためにkeyを追加 */}
                 {project.joinauth.length < project.teamSize && (
-                  <div className="bg-sky-900 w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+                  <div className="bg-[#232323] w-full md:w-5/6 border rounded-2xl p-1 mb-2">
                     <div className="flex w-full">
                       <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                        <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
+                        <div className="flex relative bg-white w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                           {project.creatorProfileImage ? (
                             <Image
                               src={project.creatorProfileImage}
@@ -106,7 +110,7 @@ const Home = () => {
                         <div className="flex justify-center pt-3">
                           <Link
                             href={`/chat/main?projectId=${project.id}`}
-                            className="bg-blue-600 rounded p-2 hover:bg-blue-700"
+                            className="bg-blue-600 rounded px-5 py-2 hover:bg-blue-700"
                           >
                             参加する
                           </Link>

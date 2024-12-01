@@ -63,7 +63,7 @@ const Pastwork = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-[calc(100vh-160px)]">
       <div className="flex flex-col items-center text-cyan-50 p-4">
         <div className="w-[90%] px-2">
           <h1 className="text-2xl sm:text-4xl font-bold w-full mb-8 p-3 border-b">
@@ -77,7 +77,7 @@ const Pastwork = () => {
               project.end && (
                 <div
                   key={project.id}
-                  className="bg-sky-900 w-80 h-96 border border-gray-700 rounded-2xl p-1 mb-4"
+                  className="bg-[#232323] w-80 h-96 border rounded-2xl p-1 mb-4"
                 >
                   <div className="flex justify-center items-end h-36 w-full">
                     <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">

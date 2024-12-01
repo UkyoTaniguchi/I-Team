@@ -81,14 +81,11 @@ const Profile = () => {
   };
 
   return (
-    <div
-      className="bg-gray-800 flex justify-center"
-      style={{ height: "calc(100vh - 10rem)" }}
-    >
-      <div className="bg-cyan-50 p-8 m-5 rounded-lg w-11/12">
+    <div className="min-h-[calc(100vh-160px)] flex justify-center text-black">
+      <div className="bg-[#232323] p-8 m-5 rounded-lg w-11/12">
         <div className="flex justify-center">
           {profileImage ? (
-            <div className="relative bg-white w-36 h-36 rounded-full border border-black overflow-hidden">
+            <div className="relative bg-white w-36 h-36 rounded-full border border-white overflow-hidden">
               <Image
                 src={profileImage}
                 alt="Profile Image"
@@ -105,13 +102,20 @@ const Profile = () => {
         </div>
         {isEditing && (
           <div className="mt-4 text-center">
-            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="text-cyan-50"
+            />
           </div>
         )}
         <div>
           {/* <h1 className="mt-10 mb-4 text-3xl font-bold">プロフィール</h1> */}
           <div className="mb-4">
-            <label className="block text-sm font-medium">アカウント名</label>
+            <label className="block text-sm font-medium text-cyan-50">
+              アカウント名
+            </label>
             {isEditing ? (
               <input
                 type="text"
@@ -120,13 +124,15 @@ const Profile = () => {
                 className="mt-1 border-2 rounded-md w-full p-2"
               />
             ) : (
-              <p className="mt-1 border-2 rounded-md w-full p-2">
+              <p className="mt-1 border-2 rounded-md w-full p-2 text-cyan-50">
                 {accountName}
               </p>
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">性別</label>
+            <label className="block text-sm font-medium text-cyan-50">
+              性別
+            </label>
             {isEditing ? (
               <select
                 value={gender}
@@ -138,11 +144,15 @@ const Profile = () => {
                 <option value="どちらでもない">どちらでもない</option>
               </select>
             ) : (
-              <p className="mt-1 border-2 rounded-md w-full p-2">{gender}</p>
+              <p className="mt-1 border-2 rounded-md w-full p-2 text-cyan-50">
+                {gender}
+              </p>
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">経験言語</label>
+            <label className="block text-sm font-medium text-cyan-50">
+              経験言語
+            </label>
             {isEditing ? (
               <input
                 type="text"
@@ -151,7 +161,7 @@ const Profile = () => {
                 className="mt-1 border-2 rounded-md w-full p-2"
               />
             ) : (
-              <p className="mt-1 border-2 rounded-md w-full p-2">
+              <p className="mt-1 border-2 rounded-md w-full p-2 text-cyan-50">
                 {experienceLanguage}
               </p>
             )}

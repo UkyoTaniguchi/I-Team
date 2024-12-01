@@ -58,7 +58,7 @@ const ProjectCreate = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-800 p-4">
+    <form onSubmit={handleSubmit} className="text-black p-4">
       <div className="flex justify-center mb-8">
         <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
         <input

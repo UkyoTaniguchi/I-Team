@@ -7,7 +7,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-
 const FormSubmit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -108,7 +107,7 @@ const FormSubmit = () => {
   };
 
   return (
-    <div className="flex bg-gray-800 w-full min-h-screen justify-center p-10">
+    <div className="flex w-full min-h-[calc(100vh-160px)] justify-center p-10">
       <div className="w-11/12 h-full">
         <div className="flex justify-center my-12">
           <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
@@ -116,7 +115,7 @@ const FormSubmit = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="border rounded-lg h-10 w-1/2"
+            className="border rounded-lg h-10 w-1/2 text-black"
           />
         </div>
         <div className="flex justify-center my-12">
@@ -126,7 +125,7 @@ const FormSubmit = () => {
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={10}
-            className="border rounded-lg w-1/2"
+            className="border rounded-lg w-1/2 text-black"
           />
         </div>
         <div className="flex justify-center my-12">
@@ -136,7 +135,7 @@ const FormSubmit = () => {
             onChange={(e) => setLink(e.target.value)}
             required
             placeholder="GitHubなどのプロジェクトに関連するURLを添付（任意）"
-            className="border rounded-lg h-10 w-1/2"
+            className="border rounded-lg h-10 w-1/2 text-black"
           />
         </div>
         <div className="flex justify-center my-14">
@@ -220,7 +219,7 @@ const FormSubmit = () => {
                 }}
                 required
                 placeholder="アプリの写真の説明情報"
-                className="border rounded-lg h-10 w-1/2"
+                className="border rounded-lg h-10 w-1/2 text-black"
               />
             </div>
           </div>
@@ -231,7 +230,7 @@ const FormSubmit = () => {
                   src={selectedImages[0]}
                   alt="selected1"
                   fill
-                  style={{objectFit:"cover"}}
+                  style={{ objectFit: "cover" }}
                   className="w-full h-full"
                 />
               ) : (
@@ -263,7 +262,7 @@ const FormSubmit = () => {
                 }}
                 required
                 placeholder="アプリの写真の説明情報"
-                className="border rounded-lg h-10 w-1/2"
+                className="border rounded-lg h-10 w-1/2 text-black"
               />
             </div>
           </div>
@@ -274,7 +273,7 @@ const FormSubmit = () => {
                   src={selectedImages[1]}
                   alt="selected2"
                   fill
-                  style={{objectFit:"cover"}}
+                  style={{ objectFit: "cover" }}
                   className="w-full h-full"
                 />
               ) : (

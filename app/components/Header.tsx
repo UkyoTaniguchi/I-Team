@@ -80,10 +80,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   };
 
   return (
-    <div className="flex w-full h-28 bg-gray-800">
-      <div className="flex items-center bg-gray-800 w-full">
+    <div className="flex w-full h-28">
+      <div className="flex items-center w-full">
         <div className="flex mx-2 sm:mx-10 items-center justify-center">
-          <Link href={isLoggedIn ? "/i-team/top" : "/"}>
+          <Link href={isLoggedIn ? "" : "/"}>
             <Image
               src="/logo.png"
               alt="I-Team logo"
@@ -94,10 +94,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
           </Link>
         </div>
         <nav className="hidden lg:block">
-          <ul className="flex gap-5 text-base">
+          <ul className="flex gap-5 text-xl">
             {!isLoggedIn ? (
               <>
-                <li>
+                <li className="mr-5">
                   <Link
                     href="/auth/login"
                     className="text-cyan-50 hover:underline"
@@ -177,7 +177,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
           </ul>
         </nav>
       </div>
-      <div className="lg:hidden flex flex-grow justify-end mr-5 bg-gray-800">
+      <div className="lg:hidden flex flex-grow justify-end mr-5">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger>
             <FiAlignJustify className="h-10 w-10 text-white" />

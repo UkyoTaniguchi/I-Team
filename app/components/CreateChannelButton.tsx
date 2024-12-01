@@ -40,7 +40,7 @@ const CreateChannelButton: React.FC<CreateChannelButtonProps> = ({
   return (
     <button
       onClick={createChannel}
-      className="text-blue-400 text-2xl font-extrabold hover:text-blue-200"
+      className="text-blue-400 text-lg font-extrabold hover:text-blue-200"
     >
       Slackチャンネルを作成
     </button>
