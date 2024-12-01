@@ -49,21 +49,19 @@ const FormProject = () => {
   }, [projectId, router]);
 
   return (
-    <div className="bg-[#232323] w-full min-h-screen text-cyan-50 p-4">
+    <div className="w-full min-h-screen text-cyan-50 p-4">
       <div className="h-screen w-full p-4">
-        <div className="h-3/4 w-full p-4">
-          <h1 className="text-6xl text-center mb-12 font-bold">{title}</h1>
-          <h2 className="text-4xl text-center mb-2 font-medium">開発内容</h2>
+        <div className="w-full p-4">
+          <h1 className="text-5xl text-center mb-12 font-bold">{title}</h1>
+          <h2 className="text-2xl text-center mb-2 font-medium">開発内容</h2>
           <div className="flex justify-center mb-12">
-            <p className="bg-sky-900 w-4/6 h-60 overflow-y-auto p-4 rounded-xl text-2xl">
+            <p className="bg-[#232323] h-60 overflow-y-auto p-4 rounded-xl text-xl">
               {description}
             </p>
           </div>
-          <h2 className="text-4xl text-center mb-2 font-medium">リンク</h2>
+          <h2 className="text-2xl text-center mb-2 font-medium">リンク</h2>
           <div className="flex justify-center">
-            <p className="bg-sky-900 h-16 w-4/6 p-4 rounded-lg text-3xl">
-              {link}
-            </p>
+            <p className="bg-[#232323] border p-4 rounded-lg text-xl">{link}</p>
           </div>
         </div>
         <div className="h-1/4 pt-24">
@@ -145,26 +143,30 @@ const FormProject = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-between h-screen w-full p-4">
-        <div className="mt-14">
-          <div className="flex justify-center">
-            <p className="text-xl w-11/12 h-10 pb-2">説明：{explain[1]}</p>
+
+      {explain[1] && (
+        <>
+          <div className="flex flex-col justify-between h-screen w-full p-4"></div>
+          <div className="mt-14">
+            <div className="flex justify-center">
+              <p className="text-xl w-11/12 h-10 pb-2">説明：{explain[1]}</p>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-center h-full">
-          <div className="flex relative w-11/12 h-full justify-center items-center">
-            {selectedImages[1] && (
-              <Image
-                src={selectedImages[1]}
-                alt="Selected"
-                fill
-                style={{ objectFit: "cover" }}
-                className="object-cover w-full h-full"
-              />
-            )}
+          <div className="flex justify-center h-full">
+            <div className="flex relative w-11/12 h-full justify-center items-center">
+              {selectedImages[1] && (
+                <Image
+                  src={selectedImages[1]}
+                  alt="Selected"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="object-cover w-full h-full"
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

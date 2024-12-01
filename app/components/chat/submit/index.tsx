@@ -107,7 +107,7 @@ const FormSubmit = () => {
   };
 
   return (
-    <div className="flex w-full min-h-screen justify-center p-10">
+    <div className="flex w-full min-h-[calc(100vh-160px)] justify-center p-10">
       <div className="w-11/12 h-full">
         <div className="flex justify-center my-12">
           <label className="text-cyan-50 text-3xl mr-3">タイトル</label>
