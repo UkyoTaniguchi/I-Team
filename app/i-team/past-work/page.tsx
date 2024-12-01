@@ -77,7 +77,7 @@ const Pastwork = () => {
               project.end && (
                 <div
                   key={project.id}
-                  className="bg-sky-900 w-80 h-96 border border-gray-700 rounded-2xl p-1 mb-4"
+                  className="bg-[#232323] w-80 h-96 border rounded-2xl p-1 mb-4"
                 >
                   <div className="flex justify-center items-end h-36 w-full">
                     <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">

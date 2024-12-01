@@ -22,19 +22,19 @@ const HomePage = () => {
             </p>
           </div>
           <div className="flex flex-col items-center mb-8">
-            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323]">
+            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323] border">
               <p>作成したいアプリケーションのメンバー募集</p>
             </div>
-            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323]">
+            <div className="rounded-xl px-10 py-3 mb-3 bg-[#232323] border">
               <p>気になる募集プロジェクトに参加・開発</p>
             </div>
-            <div className="rounded-xl px-10 py-3 bg-[#232323]">
+            <div className="rounded-xl px-10 py-3 bg-[#232323] border">
               <p>他チームの過去プロジェクトの成果物閲覧</p>
             </div>
           </div>
           <div className="flex justify-center w-full">
-            <div className="w-full sm:w-[70%] p-5 bg-[#232323] rounded-xl">
-              <div className="text-center text-lg mb-5">
+            <div className="w-full sm:w-[70%] p-5 bg-[#232323] rounded-xl border">
+              <div className="text-center text-xl mb-5">
                 <p>さっそく始めよう</p>
               </div>
               <div className="flex justify-evenly">

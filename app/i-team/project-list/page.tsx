@@ -28,26 +28,23 @@ const Myproject = () => {
 
   return (
     <div className="min-h-[calc(100vh-160px)]">
-      <div className="flex flex-col items-center text-cyan-50 p-4">
-        <div className="w-full sm:w-[90%]">
-          <h1 className="text-2xl sm:text-4xl font-bold mb-3">
+      <div className="w-full text-cyan-50 p-4">
+        <div className="flex justify-center w-full">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3 md:w-[80%] w-full">
             参加中のチーム一覧
           </h1>
         </div>
         {projects.map((project) => (
-          <div
-            key={project.id}
-            className="flex justify-center w-full sm:w-[90%] mb-5"
-          >
+          <div key={project.id} className="flex justify-center">
             {" "}
             {/* 各要素を一意にするためにkeyを追加 */}
             {project.joinauth &&
               project.joinauth.includes(auth.currentUser?.uid) &&
               !project.end && (
-                <div className="bg-sky-900 w-full border border-gray-700 rounded-2xl p-1 mb-4">
+                <div className="bg-[#232323] w-full md:w-5/6 border border-gray-700 rounded-2xl p-1 mb-2">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                      <div className="flex relative bg-white w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
+                      <div className="flex relative bg-white w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                         {project.creatorProfileImage ? (
                           <Image
                             src={project.creatorProfileImage}
@@ -124,8 +121,8 @@ const Myproject = () => {
               )}
           </div>
         ))}
-        <div className="w-full sm:w-[90%]">
-          <h1 className="text-2xl sm:text-4xl font-bold mb-3">
+        <div className="flex justify-center">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3 md:w-[80%] w-full">
             過去の参加プロジェクト
           </h1>
         </div>
@@ -136,10 +133,10 @@ const Myproject = () => {
             {project.joinauth &&
               project.joinauth.includes(auth.currentUser?.uid) &&
               project.end && (
-                <div className="bg-sky-900 w-5/6 border border-gray-700 rounded-2xl p-1 mb-4">
+                <div className="bg-[#232323] w-5/6 border border-gray-700 rounded-2xl p-1 mb-2">
                   <div className="flex w-full">
                     <div className="w-1/5 py-3 flex flex-col justify-center items-center">
-                      <div className="flex relative bg-white w-32 h-32 rounded-full border border-black justify-center items-center">
+                      <div className="flex relative bg-white w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-black justify-center items-center">
                         {project.creatorProfileImage ? (
                           <Image
                             src={project.creatorProfileImage}
